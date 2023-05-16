@@ -1,0 +1,16 @@
+.otp-container {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    width: fit-content;
+    transform: translate(-50%, -40%);
+}
+
+.otp-number {
+    max-width: 60px !important;
+}
+
+
+/* .sub-container {
+    align-content: center;
+} */
