@@ -1,7 +1,31 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar, Container, Nav } from 'react-bootstrap';
-import logo from './react-js-icon.svg'
+import { Navbar, Nav } from 'react-bootstrap';
+import logo from './react-js-icon.svg';
+import { AuthContext } from '../App';
+import { useContext } from 'react';
+
+function unauthNavLinks() {
+  return (
+    <>
+      <Nav.Link href="/signin">Login</Nav.Link>
+      <Nav.Link eventKey={2} href="/signup">
+        Sign Up
+      </Nav.Link>
+    </>
+  );
+}
+
+function authNavLinks() {
+  return (
+    <>
+      <Nav.Link href="/logout">Logout</Nav.Link>
+    </>
+  );
+}
+
 export function Header() {
+
+  const { auth } = useContext(AuthContext);
   return (
     <Navbar bg="dark" variant="dark">
       <Navbar.Brand href="/">
@@ -15,10 +39,9 @@ export function Header() {
       </Navbar.Brand>
 
       <Nav className='ms-auto'>
-        <Nav.Link href="signin">Login</Nav.Link>
-        <Nav.Link eventKey={2} href="signup">
-          Sign Up
-        </Nav.Link>
+        {
+          auth?.token ? authNavLinks() : unauthNavLinks()
+        }
       </Nav>
     </Navbar>
   );

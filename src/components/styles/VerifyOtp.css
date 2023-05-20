@@ -2,15 +2,19 @@
     position: absolute;
     left: 50%;
     top: 40%;
-    width: fit-content;
     transform: translate(-50%, -40%);
+
+    padding: 0% ;
+}
+
+.test-border {
+    border: 1px solid red ;
 }
 
 .otp-number {
-    max-width: 60px !important;
+    width: 60px !important;
 }
 
-
-/* .sub-container {
-    align-content: center;
-} */
+.otp-title {
+    text-align: center;
+}

@@ -17,7 +17,7 @@ export function SigninForm() {
 			<>
 				<div className='signin-center-container'>
 					<Row className="justify-content-md-center">
-						<p className='mb-5 h1'>Sign In</p>
+						<p className='mb-5 h1 signin-title'>Sign In</p>
 						<Col>
 							<Form>
 								<Form.Group className="mb-3" controlId="for">
