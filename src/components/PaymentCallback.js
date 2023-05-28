@@ -16,11 +16,16 @@ export function PaymentCallback() {
     const checkBookingStatus = () => {
         const orderId = searchParams.get('orderId');
         client.get(`/order/${orderId}`)
-        .then( response => response.data )
-        .then( data => {
-            setBookingStatus(data.status);
-        } )
-        .catch( errors => console.error(errors));
+            .then( response => response.data )
+            .then( data => {
+                if(data.status === 'SUCCESS'){
+                    navigate(`/appointment/${data.id}`)
+                }
+                else{
+                    setBookingStatus(data.status);
+                }
+            } )
+            .catch( errors => console.error(errors));
     }
 
     const handleRetryBook = () => {
@@ -38,11 +43,14 @@ export function PaymentCallback() {
             }
 
             {
-                bookingStatus && bookingStatus !== 'SUCCESS' && <Button onClick={checkBookingStatus}>Recheck Booking Status</Button>
+                bookingStatus 
+                    && bookingStatus !== 'SUCCESS' 
+                    && <div><Button onClick={checkBookingStatus}>Recheck Booking Status</Button></div>
             }
 
             {
-                bookingStatus === 'FAILED' && <Button onClick={handleRetryBook}>Retry Booking</Button>
+                bookingStatus === 'FAILED' 
+                    && <div><Button onClick={handleRetryBook}>Retry Booking</Button></div>
             }
         </>
     );

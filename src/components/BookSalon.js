@@ -46,7 +46,7 @@ export function BookSalon() {
 
     return (
         <>
-            Booking...
+            Redirecting to payment page...
         </>
     );
 }

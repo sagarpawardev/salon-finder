@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav } from 'react-bootstrap';
-import logo from './react-js-icon.svg';
+import logo from '../images/AppLogo.svg';
 import { AuthContext } from '../App';
 import { useContext } from 'react';
 

@@ -1,22 +1,40 @@
 import { useEffect, useState } from "react";
 import { apiBaseUrl } from "../utils";
 import axios from "axios";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 export function BookingStatus() {
-    const [searchParams] = useSearchParams();
+    const { appointmentId } = useParams();
     const [bookingStatus, setBookingStatus] = useState(undefined);
+    const navigate = useNavigate();
 
     const client = axios.create({
         baseURL: apiBaseUrl()
     });
 
+    const loadingView = () => {
+        return (
+            <div>Checking Booking Status...</div>
+        );
+    };
+
+    const bookingStatusView = () => {
+        return (
+            <div>
+                <h2>Booking Status: {bookingStatus}</h2>
+                <Button onClick={() => navigate('/')}>Home</Button>
+            </div>
+        );
+    };
+
     useEffect(() => {
-        const orderId = searchParams.get('orderId');
-        client.get(`/order/${orderId}`)
+        //const orderId = urlParams.get('appointmentId');
+        client.get(`/order/${appointmentId}`)
         .then( response => response.data )
         .then( data => {
             setBookingStatus(data.status);
+            setBookingStatus(JSON.stringify(data));
             // if(data.status === 'SUCCESS'){
             //     console.log('Appointment Booked');
             // }
@@ -30,7 +48,7 @@ export function BookingStatus() {
     return (
         <>
             {
-                bookingStatus ? <h2>Booking Status: {bookingStatus}</h2> : <div>Checking Booking Status...</div>
+                bookingStatus ? bookingStatusView() : loadingView()
             }
         </>
     );

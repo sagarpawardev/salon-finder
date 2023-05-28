@@ -1,11 +1,12 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import { SignupForm, VerifyOtp, SigninForm, SaloonList, Header, Logout, BookSalon } from './components'
+import { SignupForm, VerifyOtp, SigninForm, SaloonList, Header, Logout, BookSalon, NoPage } from './components'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useState, createContext, useEffect } from 'react';
 import { getLocalAuth, removeLocalAuth, setLocalAuth } from './utils';
 import SamplePayment from './components/test/SamplePayment';
 import PaymentCallback from './components/PaymentCallback';
+import BookingStatus from './components/BookingStatus';
 
 export const AuthContext = createContext(null);
 
@@ -38,10 +39,11 @@ function App() {
             <Route path="/verify" element={<VerifyOtp />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="/book" element={<BookSalon />} />
+            <Route path="/appointment/:appointmentId" element={<BookingStatus />} />
             <Route path="/payment/callback" element={<PaymentCallback />} />
 
             <Route path="/test/paymentLink" element={<SamplePayment />} />
-            {/* <Route path="*" element={<NoPage />} /> */}
+            <Route path="*" element={<NoPage />} />
           </Routes>
         </AuthContext.Provider>
       </div>

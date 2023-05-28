@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 import './styles/VerifyOtp.css';
-import { apiBaseUrl, setLocalAuth } from '../utils';
+import { apiBaseUrl } from '../utils';
 import { AuthContext } from '../App';
 
 export function VerifyOtp() {

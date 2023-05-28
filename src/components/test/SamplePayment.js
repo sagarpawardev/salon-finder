@@ -11,7 +11,8 @@ export function SamplePayment() {
     return (
         <>
             <h2>Sample Payment Page</h2>
-            <Button onClick={handleClick}>Redirect to callback</Button>
+            <p>you are supposed to place payment gateway page here and make payment. Once the payment is done you wil be redirected to callback page</p>
+            <Button onClick={handleClick}>Click to Redirect</Button>
         </>
     );
 }
