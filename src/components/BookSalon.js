@@ -29,18 +29,15 @@ export function BookSalon() {
             client.post('/order')
                 .then(
                     response => response.data
-                )
-                .then(
+                ).then(
                     data => {
                         window.location = data.paymentLink
                     }
-                )
-                .catch(errors => {
+                ).catch(errors => {
                     alert('unable to fetch payment link');
                     console.error(errors);
                     console.error(errors.message);
-                }
-                )
+                });
         }
     });
 

@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react'
+import { React, useContext, useEffect, useState } from 'react'
 import './styles/SaloonList.css';
 import { Button, Col, Image, Row } from 'react-bootstrap';
 
@@ -8,10 +8,12 @@ import { faClock } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { apiBaseUrl } from '../utils';
+import { AuthContext } from '../App';
 
 export function SaloonList() {
 	const [salonList, setSalonList] = useState([]);
 	const navigate = useNavigate();
+    const { auth } = useContext(AuthContext);
 
 	const client = axios.create({
 		baseURL:  apiBaseUrl()
@@ -32,9 +34,24 @@ export function SaloonList() {
 		navigate(`/book?salonId=${selectedSalonId}`);
 	};
 
+	const handleAuthUser = () => {
+		if(auth?.user?.city && auth?.user?.gender){
+			populateSalonList();
+		}
+		else{
+			navigate('/profile');
+		}
+	}
+
 	useEffect(() => {
-		populateSalonList()
-	}, [])
+		if (!auth) {
+			populateSalonList();
+		}
+		else {
+			handleAuthUser();
+		}
+		
+	}, []);
 
 	return (
 		<>

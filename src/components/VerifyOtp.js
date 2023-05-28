@@ -44,9 +44,21 @@ export function VerifyOtp() {
 		},
 	};
 
-	const handleSuccess = (data) => {
-		setAuth(data);
-		navigate('/search');
+	const handleSuccess = (authData) => {
+		setAuth( authData );
+		
+		client.get('/user')
+			.then(response => response.data)
+			.then(userData => {
+				if(userData?.gender && userData?.city){
+					setAuth( {...authData, user: {...userData}});
+					navigate('/search');
+				}
+				else{
+					navigate('/profile');
+				}
+			})
+			.catch(errors => console.error(errors));
 	};
 
 	const handleSubmit = () => {
