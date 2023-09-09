@@ -29,9 +29,10 @@ export function SaloonList() {
 		.catch(errors => console.error(errors));
 	};
 
-	const handleBook = (event) => {
+	const handleShowDetails = (event) => {
 		const selectedSalonId = event.target?.dataset?.salonId;
-		navigate(`/book?salonId=${selectedSalonId}`);
+		navigate(`/salon/${selectedSalonId}`);
+		//navigate(`/book?salonId=${selectedSalonId}`);
 	};
 
 	const handleAuthUser = () => {
@@ -76,8 +77,8 @@ export function SaloonList() {
 										</Row>
 										<Row className='mt-3'>
 											<Col className='salon-list-text-left'>
-												<Button variant="primary" size="xs" data-salon-id={salon.id} active onClick={handleBook}>
-													Book for &#8377;{salon.price}
+												<Button variant="primary" size="xs" data-salon-id={salon.id} active onClick={handleShowDetails}>
+													Show Services
 												</Button>
 											</Col>
 										</Row>

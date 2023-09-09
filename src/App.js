@@ -7,6 +7,7 @@ import { getLocalAuth, removeLocalAuth, setLocalAuth } from './utils';
 import SamplePayment from './components/test/SamplePayment';
 import PaymentCallback from './components/PaymentCallback';
 import BookingStatus from './components/BookingStatus';
+import { SalonDetails } from './components/SalonDetails';
 
 export const AuthContext = createContext(null);
 
@@ -42,6 +43,8 @@ function App() {
             <Route path="/appointment/:appointmentId" element={<BookingStatus />} />
             <Route path="/payment/callback" element={<PaymentCallback />} />
             <Route path="/profile" element={<UserProfile />} />
+
+            <Route path="/salon/:saloonId" element={<SalonDetails />} />
 
             <Route path="/test/paymentLink" element={<SamplePayment />} />
             <Route path="*" element={<NoPage />} />
