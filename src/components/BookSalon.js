@@ -26,24 +26,24 @@ export function BookSalon() {
             });
         }
         else {
-            client.post('/order')
-                .then(
-                    response => response.data
-                ).then(
-                    data => {
-                        window.location = data.paymentLink
-                    }
-                ).catch(errors => {
-                    alert('unable to fetch payment link');
-                    console.error(errors);
-                    console.error(errors.message);
-                });
+            // client.post('/order')
+            //     .then(
+            //         response => response.data
+            //     ).then(
+            //         data => {
+            //             window.location = data.paymentLink
+            //         }
+            //     ).catch(errors => {
+            //         alert('unable to fetch payment link');
+            //         console.error(errors);
+            //         console.error(errors.message);
+            //     });
         }
     });
 
     return (
         <>
-            Redirecting to payment page...
+            TODO: Sample Booking Page
         </>
     );
 }

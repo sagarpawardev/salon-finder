@@ -2,7 +2,7 @@ import { React, useContext, useEffect, useState } from 'react'
 import './styles/SalonDetails.css';
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { apiBaseUrl } from '../utils';
 import { AuthContext } from '../App';
@@ -10,6 +10,7 @@ import { AuthContext } from '../App';
 export function SalonDetails() {
 	const [serviceList, setServiceList] = useState([]);
 	const [selectedServiceSet, setSelectedServiceSet] = useState(new Set());
+	const { salonId } = useParams();
 
 	const navigate = useNavigate();
     const { auth } = useContext(AuthContext);
@@ -51,12 +52,6 @@ export function SalonDetails() {
 		// .catch(errors => console.error(errors));
 	};
 
-	const handleShowDetails = (event) => {
-		const selectedSalonId = event.target?.dataset?.salonId;
-		navigate(`/salon/${selectedSalonId}`);
-		//navigate(`/book?salonId=${selectedSalonId}`);
-	};
-
 	const handleAuthUser = () => {
 		if(auth?.user?.city && auth?.user?.gender){
 			populateSalonList();
@@ -93,6 +88,14 @@ export function SalonDetails() {
 		}
 	}
 
+	const handleChooseStylistsClick = () => {
+		navigate(`/salon/${salonId}/stylist`, {
+			state: {
+				selectedServiceSet,
+			}
+		});
+	};
+
 	useEffect(() => {
 		if (!auth) {
 			populateSalonList();
@@ -124,7 +127,7 @@ export function SalonDetails() {
 			
 			{ selectedServiceSet.size > 0 &&
 				<div class="fixed-bottom">
-					<Button size="lg" className='btn-max-width'>Choose Stylist</Button>
+					<Button size="lg" className='btn-max-width' onClick={handleChooseStylistsClick}>Choose Stylist</Button>
 				</div>
 			}
 		</>
