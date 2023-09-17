@@ -6,7 +6,6 @@ import { apiBaseUrl } from "../utils";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
-import './styles/BookSalon.css';
 import Moment from "react-moment";
 
 export function BookSalon() {

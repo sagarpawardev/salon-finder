@@ -1,5 +1,4 @@
 import { React, useContext, useEffect, useState } from 'react'
-import './styles/SalonStylist.css';
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 
 import { useLocation, useNavigate, useParams } from 'react-router-dom';

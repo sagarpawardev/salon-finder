@@ -9,20 +9,27 @@ export function PaymentCallback() {
 
     const [searchParams] = useSearchParams();
     const [bookingStatus, setBookingStatus] = useState(undefined);
-    const client = axios.create({
-        baseURL: apiBaseUrl()
+    // const client = axios.create({
+    //     baseURL: apiBaseUrl()
+    // });
+    const client = ({
+        get: () => Promise.resolve({
+            data: {
+                status: 'SUCCESS'
+            }
+        }),
     });
 
     const checkBookingStatus = () => {
         const orderId = searchParams.get('orderId');
         client.get(`/order/${orderId}`)
             .then( response => response.data )
-            .then( data => {
-                if(data.status === 'SUCCESS'){
-                    navigate(`/appointment/${data.id}`)
+            .then( booking => {
+                if(booking.status === 'SUCCESS'){
+                    navigate(`/booking/${booking.id}`)
                 }
                 else{
-                    setBookingStatus(data.status);
+                    setBookingStatus(booking.status);
                 }
             } )
             .catch( errors => console.error(errors));

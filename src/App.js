@@ -1,12 +1,13 @@
 import './App.css';
+import './components/styles/App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { SignupForm, VerifyOtp, SigninForm, SaloonList, Header, Logout, BookSalon, NoPage, UserProfile } from './components'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useState, createContext, useEffect, useLayoutEffect } from 'react';
 import { getLocalAuth, removeLocalAuth, setLocalAuth } from './utils';
-import SamplePayment from './components/test/SamplePayment';
-import PaymentCallback from './components/PaymentCallback';
-import BookingStatus from './components/BookingStatus';
+import { SamplePayment } from './components/test/SamplePayment';
+import { PaymentCallback } from './components/PaymentCallback';
+import { BookingDetails } from './components/BookingDetails';
 import { SalonDetails } from './components/SalonDetails';
 import SalonStylist from './components/SalonStylist';
 
@@ -44,7 +45,7 @@ function App() {
             <Route path="/signup" element={<SignupForm />} />
             <Route path="/verify" element={<VerifyOtp />} />
             <Route path="/logout" element={<Logout />} />
-            <Route path="/appointment/:appointmentId" element={<BookingStatus />} />
+            <Route path="/booking/:bookingId" element={<BookingDetails />} />
             <Route path="/payment/callback" element={<PaymentCallback />} />
             <Route path="/profile" element={<UserProfile />} />
 
