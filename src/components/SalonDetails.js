@@ -109,7 +109,7 @@ export function SalonDetails() {
 	return (
 		<>
 			<Container className='mt-2 mb-5'>
-				<Row xs="1" md="3" className='g-5'>
+				<Row xs="1" md="3" className='gy-5'>
 					{serviceList.map( (service, index) => (
 						<Col key={index}>
 							<Card className={"card"}>
@@ -126,7 +126,7 @@ export function SalonDetails() {
 			</Container>
 			
 			{ selectedServiceSet.size > 0 &&
-				<div class="fixed-bottom">
+				<div className="fixed-bottom">
 					<Button size="lg" className='btn-max-width' onClick={handleChooseStylistsClick}>Choose Stylist</Button>
 				</div>
 			}

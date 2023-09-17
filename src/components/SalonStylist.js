@@ -54,15 +54,6 @@ export function SalonStylist() {
 		}
 	};
 
-	const handleChooseStylistsClick = () => {
-		navigate(`/salon/${salonId}/stylist`, {
-			state: {
-				salonId,
-				selectedServiceSet,
-			}
-		});
-	};
-
 	const handleStylistClick = (event) => {
 		const stylistId = event.target.dataset.stylistId;
 		navigate(`/salon/${salonId}/book`, {
@@ -85,7 +76,7 @@ export function SalonStylist() {
 	return (
 		<>
 			<Container className='mt-2 mb-5 text-center'>
-				<Row xs="1" md="3" className='g-5'>
+				<Row xs="1" md="3" className='gy-5'>
 					{stylistList.map( (stylist, index) => (
 						<Col key={index}>
 							<Card className={"card"}>

@@ -1,0 +1,20 @@
+.c-text-small {
+    font-size: small;
+}
+
+.c-text-small-title {
+    font-weight: bold;
+    font-size: small;
+}
+
+.c-text-title {
+    font-weight: bold;
+}
+
+.c-white-container {
+    background-color: white;
+}
+
+.c-text-bold {
+    font-weight: bold;
+}

@@ -2,7 +2,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { SignupForm, VerifyOtp, SigninForm, SaloonList, Header, Logout, BookSalon, NoPage, UserProfile } from './components'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { useState, createContext, useEffect } from 'react';
+import { useState, createContext, useEffect, useLayoutEffect } from 'react';
 import { getLocalAuth, removeLocalAuth, setLocalAuth } from './utils';
 import SamplePayment from './components/test/SamplePayment';
 import PaymentCallback from './components/PaymentCallback';
@@ -26,10 +26,14 @@ function App() {
     }
   }, [auth]);
 
+  useLayoutEffect(() => {
+    document.body.style.backgroundColor = "#F5F5F5"
+  });
+
   return (
 
     <BrowserRouter>
-      <div className="app">
+      <div className="app c-container">
         <AuthContext.Provider value={{ auth: auth, setAuth: setAuth }}>
           <Header />
           <Routes>
