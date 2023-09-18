@@ -1,7 +1,7 @@
 import './App.css';
 import './components/styles/App.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import { SignupForm, VerifyOtp, SigninForm, SaloonList, Header, Logout, BookSalon, NoPage, UserProfile } from './components'
+import { SignupForm, VerifyOtp, SigninForm, SaloonList, Header, Logout, NoPage, UserProfile, BookingConfirm, BookingList } from './components'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useState, createContext, useEffect, useLayoutEffect } from 'react';
 import { getLocalAuth, removeLocalAuth, setLocalAuth } from './utils';
@@ -48,10 +48,11 @@ function App() {
             <Route path="/booking/:bookingId" element={<BookingDetails />} />
             <Route path="/payment/callback" element={<PaymentCallback />} />
             <Route path="/profile" element={<UserProfile />} />
+            <Route path="/bookings" element={<BookingList />} />
 
             <Route path="/salon/:salonId" element={<SalonDetails />} />
             <Route path="/salon/:salonId/stylist" element={<SalonStylist />} />
-            <Route path="/salon/:salonId/book" element={<BookSalon />} />
+            <Route path="/book/:bookingId/confirm" element={<BookingConfirm />} />
 
             <Route path="/test/paymentLink" element={<SamplePayment />} />
             <Route path="*" element={<NoPage />} />

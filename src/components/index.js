@@ -4,6 +4,7 @@ export * from './VerifyOtp';
 export * from './SaloonList';
 export * from './Header';
 export * from './Logout';
-export * from './BookSalon';
+export * from './BookingConfirm';
 export * from './NoPage';
 export * from './UserProfile';
+export * from './BookingList';

@@ -1,60 +1,31 @@
 import { useContext, useEffect, useState } from "react";
-import { createSearchParams, useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { createSearchParams, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { AuthContext } from "../App";
-import axios from "axios";
-import { apiBaseUrl } from "../utils";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import Moment from "react-moment";
+import client from '../utils/Client';
 
-export function BookSalon() {
+export function BookingConfirm() {
     const navigate = useNavigate();
     const { auth } = useContext(AuthContext);
     const location = useLocation();
     const [searchParams] = useSearchParams();
+    const { bookingId } = useParams();
 
-    const mockBookingDetails = {
-        "price_info": {
-          "convenienceFee": 30,
-          "totalAmount": 270,
-          "discount": 10,
-          "amountToPay": 290
-        },
-        "services": [
-          "HAIR_CUT",
-          "FACE_MASSAGE"
-        ],
-        "stylist": "Karan Johar",
-        "salon": "Sample Salon",
-        "start_time": "2023-09-12 21:04:58"
-    };
-    const mapResponse = (response) => ({
-        price: response.price_info.totalAmount,
-        convenienceFee: response.price_info.convenienceFee,
-        discount: response.price_info.discount,
-        totalAmount: response.price_info.amountToPay,
-        services: response.services.map( service => ({
-            name: service
-        })),
-        stylist: {
-            name: response.stylist,
-        },
-        salon: {
-            name: response.salon,
-        },
-        startTime: response.start_time,
-    });
-    const [ bookingDetails, setBookingDetails ] = useState( mapResponse(mockBookingDetails) );
-    const client = axios.create({
-        baseURL: apiBaseUrl()
-    });
+ 
+    const [ bookingDetails, setBookingDetails ] = useState( {} );
 
     const handlePayNow = () => {
-        navigate('/test/paymentLink');
+        client.post('/payment/init')
+            .then(response => response.data)
+            .then(data => ({
+                paymentUrl: data?.redirect_url
+            }))
+            .then(data => navigate(data?.paymentUrl))
+            .catch(errors => console.error(errors));
     };
-
-    
 
     useEffect(() => {
         if (!auth) {
@@ -69,23 +40,28 @@ export function BookSalon() {
             });
         }
         else {
-            // client.post('/order')
-            //     .then(
-            //         response => response.data
-            //     ).then(
-            //         data => {
-            //             window.location = data.paymentLink
-            //         }
-            //     ).catch(errors => {
-            //         alert('unable to fetch payment link');
-            //         console.error(errors);
-            //         console.error(errors.message);
-            //     });
-            
-
-            //setBookingDetails( mapResponse(mockBookingDetails) );
+            client.get(`/booking/${bookingId}/checkout`)
+                .then(response => response.data)
+                .then( (response) => ({
+                        price: response?.price_info?.totalAmount,
+                        convenienceFee: response?.price_info?.convenienceFee,
+                        discount: response?.price_info?.discount,
+                        totalAmount: response?.price_info?.amountToPay,
+                        services: response?.services?.map( service => ({
+                            name: service
+                        })),
+                        stylist: {
+                            name: response?.stylist,
+                        },
+                        salon: {
+                            name: response?.salon,
+                        },
+                        startTime: response?.start_time,
+                    }) 
+                )
+                .then( setBookingDetails )
         }
-    });
+    }, []);
 
     return (
         <>
@@ -97,13 +73,13 @@ export function BookSalon() {
                             <Row>
                                 <Col>
                                     <div className="c-text-small-title text-muted mt-2">Salon</div>
-                                    {bookingDetails.salon.name}
+                                    {bookingDetails?.salon?.name}
                                 </Col>
                             </Row>
                             <Row>
                                 <Col>
                                     <div className="c-text-small-title text-muted mt-2">Stylist</div>
-                                    {bookingDetails.stylist.name}
+                                    {bookingDetails?.stylist?.name}
                                 </Col>
                             </Row>
                             <Row>
@@ -115,7 +91,7 @@ export function BookSalon() {
                             <Row>
                                 <Col>
                                     <div className="c-text-small-title text-muted mt-2">Services</div>
-                                    {bookingDetails.services.map( (service, index) => (
+                                    {bookingDetails?.services?.map( (service, index) => (
                                         <div key={index} className="text-success c-text-small"> 
                                             <FontAwesomeIcon icon={faCircleCheck} style={{color: "#28a745",}} /> {service.name}
                                         </div>
@@ -176,4 +152,4 @@ export function BookSalon() {
     );
 }
 
-export default BookSalon;
+export default BookingConfirm;

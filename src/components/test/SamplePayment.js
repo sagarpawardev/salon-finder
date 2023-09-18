@@ -4,8 +4,8 @@ import { useSearchParams } from "react-router-dom";
 export function SamplePayment() {
     const [searchParams] = useSearchParams();
     const handleClick = () => {
-        const orderId = searchParams.get('orderId');
-        window.location = `/payment/callback?orderId=${orderId}`;
+        const bookingId = searchParams.get('bookingId');
+        window.location = `/payment/callback?bookingId=${bookingId}`;
     };
 
     return (

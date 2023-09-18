@@ -3,9 +3,8 @@ import './styles/SalonDetails.css';
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
-import { apiBaseUrl } from '../utils';
 import { AuthContext } from '../App';
+import client from '../utils/Client';
 
 export function SalonDetails() {
 	const [serviceList, setServiceList] = useState([]);
@@ -15,41 +14,11 @@ export function SalonDetails() {
 	const navigate = useNavigate();
     const { auth } = useContext(AuthContext);
 
-	const client = axios.create({
-		baseURL:  apiBaseUrl()
-	});
-
 	const populateSalonList = () => {
-		//TODO: Implement this
-		const mockServices = [];
-		for(let i=0; i<5; i++){
-			mockServices.push(
-				{
-					id: "HAIR_CUT",
-					name: "Hair Cut",
-					image: "https://img.freepik.com/premium-photo/young-man-with-trendy-haircut-barber-shop-barber-does-hairstyle-beard-trim_179755-8607.jpg",
-					description: "Transform your style, embrace confidence, and own the spotlight with us!",
-				}
-			);
-
-			mockServices.push(
-				{
-					name: "Face Massage",
-					id: "FACE_MASSAGE",
-					image: "https://thumbs.dreamstime.com/z/face-massage-barbershop-smiling-men-beard-closed-eyes-black-cutting-hair-cape-barber-tattoo-black-t-80662652.jpg?w=992",
-					description: "Rediscover radiant tranquility; rejuvenate your glow with our soothing face massage."
-				}
-			);
-		}
-
-		setServiceList(mockServices);
-
-		// client.get('/salon')
-		// .then(response => response.data)
-		// .then(data => {
-		// 	setSalonList(data);
-		// })
-		// .catch(errors => console.error(errors));
+		client.get('/salon/1')
+			.then(response => response.data)
+			.then(setServiceList)
+			.catch(errors => console.error(errors));
 	};
 
 	const handleAuthUser = () => {
@@ -110,7 +79,7 @@ export function SalonDetails() {
 		<>
 			<Container className='mt-2 mb-5'>
 				<Row xs="1" md="3" className='gy-5'>
-					{serviceList.map( (service, index) => (
+					{serviceList?.map( (service, index) => (
 						<Col key={index}>
 							<Card className={"card"}>
 								<Card.Img variant="top" src={service.image} />

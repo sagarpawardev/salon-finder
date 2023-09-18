@@ -1,37 +1,33 @@
 import { useEffect, useState } from "react";
-import { apiBaseUrl } from "../utils";
-import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import client from "../utils/Client";
 
 export function PaymentCallback() {
     const navigate = useNavigate();
 
     const [searchParams] = useSearchParams();
     const [bookingStatus, setBookingStatus] = useState(undefined);
-    // const client = axios.create({
-    //     baseURL: apiBaseUrl()
-    // });
-    const client = ({
-        get: () => Promise.resolve({
-            data: {
-                status: 'SUCCESS'
-            }
-        }),
-    });
+
+    const handlePaymentStatus = (payment) => {
+        console.log(payment);
+        if(payment.status === 'SUCCESS'){
+            navigate(`/booking/${payment?.bookingId}`)
+        }
+        else{
+            setBookingStatus(payment.status);
+        }
+    };
 
     const checkBookingStatus = () => {
-        const orderId = searchParams.get('orderId');
-        client.get(`/order/${orderId}`)
-            .then( response => response.data )
-            .then( booking => {
-                if(booking.status === 'SUCCESS'){
-                    navigate(`/booking/${booking.id}`)
-                }
-                else{
-                    setBookingStatus(booking.status);
-                }
-            } )
+        client.post(`/payment/recon`)
+            .then(response => response.data)
+            .then(data => ({
+                paymentId: data?.payment_id,
+                bookingId: data?.booking_id,
+                status: data?.status
+            }))
+            .then(handlePaymentStatus)
             .catch( errors => console.error(errors));
     }
 

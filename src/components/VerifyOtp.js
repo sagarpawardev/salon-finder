@@ -4,11 +4,10 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
-import axios from "axios";
 
 import './styles/VerifyOtp.css';
-import { apiBaseUrl } from '../utils';
 import { AuthContext } from '../App';
+import client from '../utils/Client';
 
 export function VerifyOtp() {
 	const number1 = useRef(null);
@@ -18,10 +17,6 @@ export function VerifyOtp() {
 	const navigate = useNavigate();
 
 	const { setAuth } = useContext(AuthContext);
-
-	const client = axios.create({
-		baseURL:  apiBaseUrl()
-	});
 
 	const otpMap = {
 		'form.number1': {
@@ -65,13 +60,15 @@ export function VerifyOtp() {
 		const enteredOtp = number1.current.value + number2.current.value + number3.current.value + number4.current.value;
 		client.post("/auth", {
 			"otp": enteredOtp
-		}).then( request => {
-			if(request?.data?.token){
-				handleSuccess(request.data);
+		})
+		.then(request => request.data)
+		.then(data => {
+			if(data?.token){
+				handleSuccess(data);
 			}
 			else{
 				console.error('failed to login');
-				console.error(request.data);
+				console.error(data);
 			}
 		})
 		.catch(errors => console.error(errors));

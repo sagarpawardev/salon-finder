@@ -3,9 +3,8 @@ import { Col, Dropdown, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { AuthContext } from '../App';
-import { apiBaseUrl } from '../utils';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import client from '../utils/Client';
 
 export function UserProfile() {
 
@@ -16,10 +15,6 @@ export function UserProfile() {
 	const { auth, setAuth } = useContext(AuthContext);
 	const refName = useRef(null);
 	const navigate = useNavigate();
-
-	const client = axios.create({
-		baseURL:  apiBaseUrl()
-	});
 
 	useEffect(() =>{
 		setCities([

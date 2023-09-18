@@ -6,33 +6,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { apiBaseUrl } from '../utils';
 import { AuthContext } from '../App';
+import client from '../utils/Client';
 
 export function SaloonList() {
 	const [salonList, setSalonList] = useState([]);
 	const navigate = useNavigate();
     const { auth } = useContext(AuthContext);
 
-	const client = axios.create({
-		baseURL:  apiBaseUrl()
-	});
-
 	const populateSalonList = () => {
-		
-		client.get('/salon')
-		.then(response => response.data)
-		.then(data => {
-			setSalonList(data);
-		})
-		.catch(errors => console.error(errors));
+		client.get('/salons')
+			.then(response => response.data)
+			.then(setSalonList)
+			.catch(errors => console.error(errors));
 	};
 
 	const handleShowDetails = (event) => {
 		const selectedSalonId = event.target?.dataset?.salonId;
 		navigate(`/salon/${selectedSalonId}`);
-		//navigate(`/book?salonId=${selectedSalonId}`);
 	};
 
 	const handleAuthUser = () => {

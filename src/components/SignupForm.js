@@ -4,32 +4,22 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import './styles/SignupForm.css';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { apiBaseUrl } from '../utils';
 import { useRef } from 'react';
+import client from '../utils/Client';
 
 export function SignupForm() {
 	const navigate = useNavigate();
 	const name = useRef(null);
 	const mobile = useRef(null);
 
-	const client = axios.create({
-		baseURL:  apiBaseUrl()
-	});
-
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		client.post("/user",{
-			"name": name.current.value,
-			"mobile": mobile.current.value,
-		}).then(
-			() => {
-				navigate("/verify");
-			}
-		)
-		.catch( errors => {
-			console.errors(errors);
-		});
+		client.post("/user", {
+				"name": name.current.value,
+				"mobile": mobile.current.value,
+			})
+			.then(navigate("/verify"))
+			.catch( errors => console.errors(errors));
 	};
 
 	return (

@@ -18,6 +18,8 @@ function unauthNavLinks() {
 function authNavLinks() {
   return (
     <>
+      <Nav.Link href="/profile">Account</Nav.Link>
+      <Nav.Link href="/bookings">Bookings</Nav.Link>
       <Nav.Link href="/logout">Logout</Nav.Link>
     </>
   );
