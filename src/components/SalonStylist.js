@@ -12,13 +12,6 @@ export function SalonStylist() {
 
 	const navigate = useNavigate();
 
-	const populateStylist = () => {
-		client.get(`/salon/${salonId}/stylists`)
-			.then(response => response.data)
-			.then(setStylistList)
-			.catch(errors => console.error(errors));
-	};
-
 	const handleBookingStatus = (reservation) => {
 		if(reservation?.status === RESERVED) {
 			navigate(`/book/${reservation?.bookingId}/confirm`);
@@ -41,8 +34,11 @@ export function SalonStylist() {
 	};
 
 	useEffect(() => {
-		populateStylist();
-	}, []);
+		client.get(`/salon/${salonId}/stylists`)
+			.then(response => response.data)
+			.then(setStylistList)
+			.catch(errors => console.error(errors));
+	}, [salonId]);
 
 	return (
 		<>

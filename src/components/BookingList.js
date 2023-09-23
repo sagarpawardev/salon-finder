@@ -10,13 +10,6 @@ export function BookingList() {
 	const [bookingList, setBookingList] = useState([]);
 	const navigate = useNavigate();
 
-	const populateBookingList = () => {
-		client.get('/bookings')
-			.then(response => response.data)
-			.then( setBookingList )
-			.catch(errors => console.error(errors));
-	};
-
 	const handleClick = (event) => {
 		const bookingId = event.currentTarget.dataset.id
 		navigate(`/booking/${bookingId}`);
@@ -32,7 +25,10 @@ export function BookingList() {
 	};
 
 	useEffect(() => {
-		populateBookingList();		
+		client.get('/bookings')
+			.then(response => response.data)
+			.then( setBookingList )
+			.catch(errors => console.error(errors));	
 	}, []);
 
 	return (

@@ -43,8 +43,8 @@ export function BookingConfirm() {
                     startTime: response?.start_time,
                 }) 
             )
-            .then( setBookingDetails );
-    }, []);
+            .then(setBookingDetails);
+    }, [bookingId]);
 
     return (
         <>

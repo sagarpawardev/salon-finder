@@ -12,13 +12,6 @@ export function SalonDetails() {
 
 	const navigate = useNavigate();
 
-	const populateSalonList = () => {
-		client.get('/salon/1')
-			.then(response => response.data)
-			.then(setServiceList)
-			.catch(errors => console.error(errors));
-	};
-
 	const handleServiceRemoved = (event) => {
 		const serviceId = event.target.dataset.serviceId;
 		selectedServiceSet.delete(serviceId);
@@ -55,8 +48,11 @@ export function SalonDetails() {
 	};
 
 	useEffect(() => {
-		populateSalonList();
-	}, []);
+		client.get(`/salon/${salonId}`)
+			.then(response => response.data)
+			.then(setServiceList)
+			.catch(errors => console.error(errors));
+	}, [salonId]);
 
 	return (
 		<>

@@ -12,20 +12,16 @@ export function SaloonList() {
 	const [salonList, setSalonList] = useState([]);
 	const navigate = useNavigate();
 
-	const populateSalonList = () => {
-		client.get('/salons')
-			.then(response => response.data)
-			.then(setSalonList)
-			.catch(errors => console.error(errors));
-	};
-
 	const handleShowDetails = (event) => {
 		const selectedSalonId = event.target?.dataset?.salonId;
 		navigate(`/salon/${selectedSalonId}`);
 	};
 
 	useEffect(() => {
-		populateSalonList();
+		client.get('/salons')
+			.then(response => response.data)
+			.then(setSalonList)
+			.catch(errors => console.error(errors));
 	}, []);
 
 	return (
