@@ -81,7 +81,7 @@ export function BookingDetails() {
             }))
             .then( data => setBooking(data))
             .catch( errors => console.error(errors));
-    }, []);
+    }, [bookingId]);
 
     return (
         <>

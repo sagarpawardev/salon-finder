@@ -1,25 +1,23 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import client from "../utils/Client";
 
 export function PaymentCallback() {
     const navigate = useNavigate();
 
-    const [searchParams] = useSearchParams();
     const [bookingStatus, setBookingStatus] = useState(undefined);
 
-    const handlePaymentStatus = (payment) => {
-        console.log(payment);
+    const handlePaymentStatus = useCallback((payment) => {
         if(payment.status === 'SUCCESS'){
             navigate(`/booking/${payment?.bookingId}`)
         }
         else{
             setBookingStatus(payment.status);
         }
-    };
+    }, [navigate]);
 
-    const checkBookingStatus = () => {
+    const checkBookingStatus = useCallback(() => {
         client.post(`/payment/recon`)
             .then(response => response.data)
             .then(data => ({
@@ -29,7 +27,7 @@ export function PaymentCallback() {
             }))
             .then(handlePaymentStatus)
             .catch( errors => console.error(errors));
-    }
+    }, [handlePaymentStatus])
 
     const handleRetryBook = () => {
         navigate('/');
@@ -37,7 +35,7 @@ export function PaymentCallback() {
 
     useEffect(() => {
         checkBookingStatus();
-    }, []);
+    }, [checkBookingStatus]);
 
     return (
         <>
