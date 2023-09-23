@@ -10,6 +10,7 @@ import { PaymentCallback } from './components/PaymentCallback';
 import { BookingDetails } from './components/BookingDetails';
 import { SalonDetails } from './components/SalonDetails';
 import SalonStylist from './components/SalonStylist';
+import ProtectedRoute from './utils/ProtectedRoute';
 
 export const AuthContext = createContext(null);
 
@@ -45,15 +46,32 @@ function App() {
             <Route path="/signup" element={<SignupForm />} />
             <Route path="/verify" element={<VerifyOtp />} />
             <Route path="/logout" element={<Logout />} />
-            <Route path="/booking/:bookingId" element={<BookingDetails />} />
-            <Route path="/payment/callback" element={<PaymentCallback />} />
-            <Route path="/profile" element={<UserProfile />} />
-            <Route path="/bookings" element={<BookingList />} />
 
             <Route path="/salon/:salonId" element={<SalonDetails />} />
             <Route path="/salon/:salonId/stylist" element={<SalonStylist />} />
-            <Route path="/book/:bookingId/confirm" element={<BookingConfirm />} />
 
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <UserProfile />
+              </ProtectedRoute>
+            } />
+            <Route path="/bookings" element={
+              <ProtectedRoute>
+                <BookingList />
+              </ProtectedRoute>
+            } />
+            <Route path="/book/:bookingId/confirm" element={
+              <ProtectedRoute>
+                <BookingConfirm />
+              </ProtectedRoute>
+            } />
+            <Route path="/booking/:bookingId" element={
+              <ProtectedRoute>
+                <BookingDetails />
+              </ProtectedRoute>
+            } />
+
+            <Route path="/payment/callback" element={<PaymentCallback />} />
             <Route path="/test/paymentLink" element={<SamplePayment />} />
             <Route path="*" element={<NoPage />} />
           </Routes>

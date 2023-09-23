@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { createSearchParams, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { AuthContext } from "../App";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
@@ -9,9 +8,6 @@ import client from '../utils/Client';
 
 export function BookingConfirm() {
     const navigate = useNavigate();
-    const { auth } = useContext(AuthContext);
-    const location = useLocation();
-    const [searchParams] = useSearchParams();
     const { bookingId } = useParams();
 
  
@@ -28,39 +24,26 @@ export function BookingConfirm() {
     };
 
     useEffect(() => {
-        if (!auth) {
-            const params = { ref: location.pathname };
-            searchParams.forEach((value, key) => {
-                params[key] = value;
-            });
-
-            navigate({
-                pathname: '/signin',
-                search: `?${createSearchParams(params)}`,
-            });
-        }
-        else {
-            client.get(`/booking/${bookingId}/checkout`)
-                .then(response => response.data)
-                .then( (response) => ({
-                        price: response?.price_info?.totalAmount,
-                        convenienceFee: response?.price_info?.convenienceFee,
-                        discount: response?.price_info?.discount,
-                        totalAmount: response?.price_info?.amountToPay,
-                        services: response?.services?.map( service => ({
-                            name: service
-                        })),
-                        stylist: {
-                            name: response?.stylist,
-                        },
-                        salon: {
-                            name: response?.salon,
-                        },
-                        startTime: response?.start_time,
-                    }) 
-                )
-                .then( setBookingDetails )
-        }
+        client.get(`/booking/${bookingId}/checkout`)
+            .then(response => response.data)
+            .then( (response) => ({
+                    price: response?.price_info?.totalAmount,
+                    convenienceFee: response?.price_info?.convenienceFee,
+                    discount: response?.price_info?.discount,
+                    totalAmount: response?.price_info?.amountToPay,
+                    services: response?.services?.map( service => ({
+                        name: service
+                    })),
+                    stylist: {
+                        name: response?.stylist,
+                    },
+                    salon: {
+                        name: response?.salon,
+                    },
+                    startTime: response?.start_time,
+                }) 
+            )
+            .then( setBookingDetails );
     }, []);
 
     return (

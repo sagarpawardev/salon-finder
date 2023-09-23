@@ -1,35 +1,22 @@
-import { React, useContext, useEffect, useState } from 'react'
+import { React, useEffect, useState } from 'react'
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { AuthContext } from '../App';
+import { useNavigate, useParams } from 'react-router-dom';
 import client from '../utils/Client';
 
 export function SalonStylist() {
 	const [stylistList, setStylistList] = useState([]);
 	const { salonId } = useParams();
-	const { state } = useLocation();
-	const { selectedServiceSet } = state;
 
 	const RESERVED = 'RESERVED';
 
 	const navigate = useNavigate();
-    const { auth } = useContext(AuthContext);
 
 	const populateStylist = () => {
 		client.get(`/salon/${salonId}/stylists`)
 			.then(response => response.data)
 			.then(setStylistList)
 			.catch(errors => console.error(errors));
-	};
-
-	const handleAuthUser = () => {
-		if(auth?.user?.city && auth?.user?.gender){
-			populateStylist();
-		}
-		else{
-			navigate('/profile');
-		}
 	};
 
 	const handleBookingStatus = (reservation) => {
@@ -54,12 +41,7 @@ export function SalonStylist() {
 	};
 
 	useEffect(() => {
-		if (!auth) {
-			populateStylist();
-		}
-		else {
-			handleAuthUser();
-		}
+		populateStylist();
 	}, []);
 
 	return (

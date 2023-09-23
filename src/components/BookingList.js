@@ -1,16 +1,14 @@
-import { React, useContext, useEffect, useState } from 'react'
+import { React, useEffect, useState } from 'react'
 import './styles/SaloonList.css';
 import { Col, Container, Row } from 'react-bootstrap';
 
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../App';
 import Moment from 'react-moment';
 import client from '../utils/Client';
 
 export function BookingList() {
 	const [bookingList, setBookingList] = useState([]);
 	const navigate = useNavigate();
-    const { auth } = useContext(AuthContext);
 
 	const populateBookingList = () => {
 		client.get('/bookings')
@@ -24,15 +22,6 @@ export function BookingList() {
 		navigate(`/booking/${bookingId}`);
 	};
 
-	const handleAuthUser = () => {
-		if(auth?.user?.city && auth?.user?.gender){
-			populateBookingList();
-		}
-		else{
-			navigate('/profile');
-		}
-	}
-
 	const getStatusClass = (status) => {
 		switch(status?.toLowerCase()) {
 			case 'confirmed': return 'text-success';
@@ -43,13 +32,7 @@ export function BookingList() {
 	};
 
 	useEffect(() => {
-		if (!auth) {
-			populateBookingList();
-		}
-		else {
-			handleAuthUser();
-		}
-		
+		populateBookingList();		
 	}, []);
 
 	return (

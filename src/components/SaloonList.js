@@ -1,4 +1,4 @@
-import { React, useContext, useEffect, useState } from 'react'
+import { React, useEffect, useState } from 'react'
 import './styles/SaloonList.css';
 import { Button, Col, Image, Row } from 'react-bootstrap';
 
@@ -6,13 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../App';
 import client from '../utils/Client';
 
 export function SaloonList() {
 	const [salonList, setSalonList] = useState([]);
 	const navigate = useNavigate();
-    const { auth } = useContext(AuthContext);
 
 	const populateSalonList = () => {
 		client.get('/salons')
@@ -26,23 +24,8 @@ export function SaloonList() {
 		navigate(`/salon/${selectedSalonId}`);
 	};
 
-	const handleAuthUser = () => {
-		if(auth?.user?.city && auth?.user?.gender){
-			populateSalonList();
-		}
-		else{
-			navigate('/profile');
-		}
-	}
-
 	useEffect(() => {
-		if (!auth) {
-			populateSalonList();
-		}
-		else {
-			handleAuthUser();
-		}
-		
+		populateSalonList();
 	}, []);
 
 	return (

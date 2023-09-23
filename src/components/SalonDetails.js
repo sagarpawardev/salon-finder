@@ -1,9 +1,8 @@
-import { React, useContext, useEffect, useState } from 'react'
+import { React, useEffect, useState } from 'react'
 import './styles/SalonDetails.css';
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 
 import { useNavigate, useParams } from 'react-router-dom';
-import { AuthContext } from '../App';
 import client from '../utils/Client';
 
 export function SalonDetails() {
@@ -12,22 +11,12 @@ export function SalonDetails() {
 	const { salonId } = useParams();
 
 	const navigate = useNavigate();
-    const { auth } = useContext(AuthContext);
 
 	const populateSalonList = () => {
 		client.get('/salon/1')
 			.then(response => response.data)
 			.then(setServiceList)
 			.catch(errors => console.error(errors));
-	};
-
-	const handleAuthUser = () => {
-		if(auth?.user?.city && auth?.user?.gender){
-			populateSalonList();
-		}
-		else{
-			navigate('/profile');
-		}
 	};
 
 	const handleServiceRemoved = (event) => {
@@ -66,13 +55,7 @@ export function SalonDetails() {
 	};
 
 	useEffect(() => {
-		if (!auth) {
-			populateSalonList();
-		}
-		else {
-			handleAuthUser();
-		}
-		
+		populateSalonList();
 	}, []);
 
 	return (
