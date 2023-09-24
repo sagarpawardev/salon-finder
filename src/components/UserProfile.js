@@ -25,7 +25,7 @@ export function UserProfile() {
 
 		setSelectedCity(auth?.city);
 		setSelectedGender(auth?.gender);
-	}, [auth?.city, auth?.gender, cities]);
+	}, []);
 
 	const handleSuccess = (data) => {
 		setAuth({...auth, user: {...data}});
