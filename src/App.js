@@ -28,9 +28,9 @@ function App() {
     }
   }, [auth]);
 
-  useLayoutEffect(() => {
-    document.body.style.backgroundColor = "#F5F5F5"
-  });
+  // useLayoutEffect(() => {
+  //   document.body.style.backgroundColor = "#F5F5F5"
+  // });
 
   return (
 

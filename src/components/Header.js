@@ -1,16 +1,16 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav } from 'react-bootstrap';
-import logo from '../images/AppLogo.svg';
 import { AuthContext } from '../App';
 import { useContext } from 'react';
+import styles from './styles/Header.module.scss';
 
 function unauthNavLinks() {
   return (
     <>
-      <Nav.Link href="/signin">Login</Nav.Link>
-      <Nav.Link eventKey={2} href="/signup">
+      <Nav.Link className={`align-bottom ${styles.login}`} href="/signin">Login</Nav.Link>
+      {/* <Nav.Link eventKey={2} href="/signup">
         Sign Up
-      </Nav.Link>
+      </Nav.Link> */}
     </>
   );
 }
@@ -29,15 +29,9 @@ export function Header() {
 
   const { auth } = useContext(AuthContext);
   return (
-    <Navbar bg="dark" variant="dark">
+    <Navbar className={`${styles.whiteBg} shadow-sm mb-3 bg-white rounded`} sticky='top'>
       <Navbar.Brand href="/">
-        <img
-          src={logo}
-          width="30"
-          height="30"
-          className="d-inline-block align-top"
-          alt="Brand logo"
-        />
+        <span className={styles.logo}>KROMPY</span>
       </Navbar.Brand>
 
       <Nav className='ms-auto'>

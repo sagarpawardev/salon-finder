@@ -6,14 +6,16 @@
 // });
 
 const getMocks = {
-    "/salons": [
+    "/salons": {
+        city: 'Pune',
+        salons: [
         {
             "id": "1",
-            "name": "Bob Unisex Saloon",
+            "name": "Bob Unisex Saloon and Total Transformation for Hair ",
             "address": "Gachibowli, Hyderabad",
             "phone": "+919876543210",
             "type": "HE",
-            "photo": "https://picsum.photos/200",
+            "photo": "https://picsum.photos/200?1",
             "workingTime": "9:00 AM - 9:00 PM", 
             "price": "90"
         },
@@ -23,7 +25,7 @@ const getMocks = {
             "address": "Gachibowli, Hyderabad",
             "phone": "+919876543210",
             "type": "HE",
-            "photo": "https://picsum.photos/200",
+            "photo": "https://picsum.photos/200?2",
             "workingTime": "9:00 AM - 9:00 PM", 
             "price": "90"
         },
@@ -33,7 +35,7 @@ const getMocks = {
             "address": "Gachibowli, Hyderabad",
             "phone": "+919876543210",
             "type": "HE",
-            "photo": "https://picsum.photos/200",
+            "photo": "https://picsum.photos/200?3",
             "workingTime": "9:00 AM - 9:00 PM", 
             "price": "90"
         },
@@ -43,7 +45,7 @@ const getMocks = {
             "address": "Gachibowli, Hyderabad",
             "phone": "+919876543210",
             "type": "HE",
-            "photo": "https://picsum.photos/200",
+            "photo": "https://picsum.photos/200?4",
             "workingTime": "9:00 AM - 9:00 PM", 
             "price": "90"
         },
@@ -53,11 +55,11 @@ const getMocks = {
             "address": "Gachibowli, Hyderabad",
             "phone": "+919876543210",
             "type": "HE",
-            "photo": "https://picsum.photos/200",
+            "photo": "https://picsum.photos/200?5",
             "workingTime": "9:00 AM - 9:00 PM", 
             "price": "90"
         }
-    ],
+    ]},
     "/salon/1": [
         {
             id: "HAIR_CUT",

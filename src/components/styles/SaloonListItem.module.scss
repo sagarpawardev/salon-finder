@@ -1,0 +1,17 @@
+@use "./common/padding";
+
+.salonListItem {
+    max-width: 800px;
+}
+
+.cityPref {
+    color: black;
+}
+
+.smallText {
+    font-size: 0.9em;
+}
+
+.ratingValue {
+    @include padding.horizontalXXXSmall;
+}

@@ -1,5 +1,4 @@
 import { React, useEffect, useState } from 'react'
-import './styles/SaloonList.css';
 import { Col, Container, Row } from 'react-bootstrap';
 
 import { useNavigate } from 'react-router-dom';

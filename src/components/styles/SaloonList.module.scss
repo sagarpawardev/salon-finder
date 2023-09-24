@@ -1,0 +1,21 @@
+@use "./common/padding";
+
+.listHeader {
+    color: black;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.03rem;
+    text-underline-offset: 3px;
+    
+    @include padding.verticalSmall;
+    @include padding.horizontalSmall;
+}
+
+.cityPref {
+    color: black;
+}
+
+.rowDivider {
+    color: rgba(0, 0, 0, 0.50);
+    border: 1px 0 1px 0 solid;
+}

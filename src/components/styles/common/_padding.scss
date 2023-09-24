@@ -1,0 +1,55 @@
+@mixin aroundMedium {
+    padding: 1rem;
+}
+
+@mixin aroundSmall {
+    padding: 0.75rem;
+}
+
+@mixin aroundXSmall {
+    padding: 0.5rem;
+}
+
+@mixin aroundXXSmall {
+    padding: 0.25rem;
+}
+
+@mixin verticalMedium {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+@mixin verticalSmall {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+@mixin verticalXSmall {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+@mixin horizontalMedium {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+@mixin horizontalSmall {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+
+@mixin horizontalXSmall {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+@mixin horizontalXXSmall {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+}
+
+@mixin horizontalXXXSmall {
+    padding-left: 0.125rem;
+    padding-right: 0.125rem;
+}
