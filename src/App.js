@@ -3,7 +3,7 @@ import './components/styles/App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { SignupForm, VerifyOtp, SigninForm, SaloonList, Header, Logout, NoPage, UserProfile, BookingConfirm, BookingList } from './components'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { useState, createContext, useEffect, useLayoutEffect } from 'react';
+import { useState, createContext, useEffect } from 'react';
 import { getLocalAuth, removeLocalAuth, setLocalAuth } from './utils';
 import { SamplePayment } from './components/test/SamplePayment';
 import { PaymentCallback } from './components/PaymentCallback';
