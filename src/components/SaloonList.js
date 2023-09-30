@@ -52,7 +52,6 @@ export function SaloonList() {
 	return (
 		<>
 			<Container>
-
 				<Row className={`${styles.listHeader} justify-content-md-center`}>
 					<Col lg="8">
 						Salons in <u className={styles.cityPref} onClick={handleLocationClick}>{city}</u>
@@ -62,7 +61,7 @@ export function SaloonList() {
 				<Row className="justify-content-md-center">
 					<Col md="auto">
 						{salonList.map((salon, index) => (
-							<div key={index} data-salon-id={salon?.id} onClick={handleClickSalon}>
+							<div key={index} data-salon-id={salon?.id} onClick={handleClickSalon} className={styles.clickable}>
 								<SaloonListItem salon={salon}/>
 
 								{	index !== salonList.length-1 && (

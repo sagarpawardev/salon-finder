@@ -1,0 +1,26 @@
+@use './common/padding';
+@use './common/constants' as *;
+
+.salonName {
+    color: black;
+    font-size: 32px;
+    font-family: DM Sans;
+    font-weight: 700;
+    line-height: 38px;
+}
+
+.smallText {
+    font-size: 0.9em;
+}
+
+.ratingValue {
+    @include padding.horizontalXXXSmall;
+}
+
+.paddedText {
+    @include padding.horizontalXXSmall;
+}
+
+.parentContainer {
+    max-width: $max-container-width;
+}

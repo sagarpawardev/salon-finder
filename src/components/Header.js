@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 import { AuthContext } from '../App';
 import { useContext } from 'react';
 import styles from './styles/Header.module.scss';
@@ -30,15 +30,17 @@ export function Header() {
   const { auth } = useContext(AuthContext);
   return (
     <Navbar className={`${styles.whiteBg} shadow-sm mb-3 bg-white rounded`} sticky='top'>
-      <Navbar.Brand href="/">
-        <span className={styles.logo}>KROMPY</span>
-      </Navbar.Brand>
+      <Container className={styles.mainContainer}>
+        <Navbar.Brand href="/">
+          <span className={styles.logo}>KROMPY</span>
+        </Navbar.Brand>
 
-      <Nav className='ms-auto'>
-        {
-          auth?.token ? authNavLinks() : unauthNavLinks()
-        }
-      </Nav>
+        <Nav className='ms-auto'>
+          {
+            auth?.token ? authNavLinks() : unauthNavLinks()
+          }
+        </Nav>
+      </Container>
     </Navbar>
   );
 }

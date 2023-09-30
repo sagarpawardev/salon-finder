@@ -1,3 +1,19 @@
+@mixin leftRight {
+    padding-left: 1rem;
+}
+
+@mixin leftSmall {
+    padding-left: 0.75rem;
+}
+
+@mixin leftXSmall {
+    padding-left: 0.5rem;
+}
+
+@mixin leftXXSmall {
+    padding-left: 0.25rem;
+}
+
 @mixin aroundMedium {
     padding: 1rem;
 }

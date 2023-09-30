@@ -26,16 +26,16 @@ export function SaloonListItem(props) {
 							</Col>
 						</Row>
 						<Row className={`${styles.smallText} text-muted`}>
-							<Col xs='1'>
+							<Col>
 								<GeoAltFill size={12} className="align-baseline"/>
+								<span className='mx-1'>{props.salon?.address}</span>
 							</Col>
-							<Col xs='10'>{props.salon?.address}</Col>
 						</Row>
 						<Row className={`${styles.smallText} text-muted`}>
-							<Col xs='1'>
+							<Col>
 								<Watch size={12} className="align-baseline"/>
+								<span className='mx-1'>{props.salon?.workingTime}</span>
 							</Col>
-							<Col xs='10'>{props.salon?.workingTime}</Col>
 						</Row>
 					</Col>
 				</Row>

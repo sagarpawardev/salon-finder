@@ -1,4 +1,5 @@
 @use "./common/padding";
+@use "./common/constants" as *;
 
 .whiteBg {
     background-color: white;
@@ -16,4 +17,8 @@
     font-weight: 700;
     @include padding.horizontalMedium;
     letter-spacing: 1px;
+}
+
+.mainContainer {
+    max-width: $max-container-width;
 }
