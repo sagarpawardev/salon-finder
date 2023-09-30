@@ -18,12 +18,35 @@ export function SalonDetails() {
 	const { salonId } = useParams();
 	const navigate = useNavigate();
 
+	const RESERVED = 'RESERVED';
+
 	useEffect(() => {
 		client.get(`/salon/${salonId}`)
 			.then(response => response.data)
 			.then(setSalon)
 			.catch(errors => console.error(errors));
 	}, [salonId]);
+
+	const handleBookingStatus = (reservation) => {
+		if(reservation?.status === RESERVED) {
+			navigate(`/book/${reservation?.bookingId}/confirm`);
+		}
+		else {
+			//TODO: handle error
+			throw new Error('Error not handled');
+		}
+	}
+
+	const handleSubmit = () => {
+		client.post('/slot/reserve')
+			.then(response => response.data)
+			.then(data => ({
+				bookingId: data?.booking_id,
+				status: data?.status
+			}))
+			.then(handleBookingStatus)
+			.catch(errors => console.error(errors));
+	}
 
 	const handleServiceSelection = (services) => {
 		setSelectedServices(services);
@@ -59,6 +82,15 @@ export function SalonDetails() {
 						onSelection={handleSlotSelection}
 					></TimeSlotList>
 				</Row>
+				<Row className='p-5'/>
+			</Container>
+			<Container 
+				className={`px-4 py-3 text-end ${styles.parentContainer} ${styles.fixedBottom} ${styles.footer}`}
+				onClick={handleSubmit}
+			>
+				<div className={styles.top}>
+					<div className={styles.bottom}>Book</div>
+				</div>
 			</Container>
 		</>
 	);
