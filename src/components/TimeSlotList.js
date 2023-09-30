@@ -36,7 +36,7 @@ export function TimeSlotList({salonId, services, stylist, onSelection}) {
                         <Moment format='d MMM (dddd)'>{timeSlot?.date}</Moment>
                     </div>
                     <Container>
-                        <Row xs="2" lg="6">
+                        <Row xs="2" lg="5">
                             {timeSlot?.slots?.map( (slot, idx) => (
                                 <Col key={idx}>
                                     <TimeSlot 

@@ -13,7 +13,7 @@ export function StylistListItem({service, selected, onSelectionChange}) {
 	
 	return (
 		<>
-			<Col className='text-center p-2' onClick={handleClick}>
+			<Col className='text-center p-2 c-clickable' onClick={handleClick}>
 				<SelectableImage src={service?.pic} selected={selected} />
 				<div className={styles.selectableContent}>
 					{service?.name}

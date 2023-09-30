@@ -9,7 +9,7 @@ export function TimeSlot({slot, selected, onClick}) {
             <div 
                 onClick={handleClick}
                 className={
-                    `px-3 py-2 my-1 
+                    `px-3 py-2 my-2 c-clickable
                         ${styles.roundBorder} 
                         ${styles.smallCenterText} 
                         ${selected ? styles.selected : ''}

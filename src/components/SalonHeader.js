@@ -7,7 +7,7 @@ import { GeoAltFill, Watch } from 'react-bootstrap-icons';
 export function SalonHeader({salon}) {
 	return (
 		<>
-			<div className={`justify-content-md-center my-2 ${styles.salonName}`}>
+			<div className={`text-center my-2 ${styles.salonName}`}>
 				{salon.name}
 			</div>
 			

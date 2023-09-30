@@ -9,7 +9,7 @@ export function StylistListItem({stylist, selected, onSelect}) {
 	
 	return (
 		<>
-			<Col className='text-center p-2' onClick={handleClick}>
+			<Col className='text-center p-2 c-clickable' onClick={handleClick}>
 				<SelectableImage src={stylist?.photo} selected={selected}/>
 				<div>{stylist.name}</div>
 			</Col>
