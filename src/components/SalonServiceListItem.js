@@ -6,7 +6,7 @@ import { SelectableImage } from './SelectableImage';
 export function StylistListItem({service, selected, onSelectionChange}) {
 	const handleClick = () => {
 		onSelectionChange({
-			id: service?.id,
+			service: service,
 			selected: !selected,
 		});
 	};

@@ -239,8 +239,40 @@ const postMocks = {
         "booking_id": "123",
         "status": "SUCCESS"
     },
-    "/user": {
-        
+    "/nextSlot": {
+        date: "2023-06-01",
+        slots: [
+            {
+                id: '1',
+                startTime: '9:00 AM',
+                endTime: '10:00 AM'
+            },
+            {
+                id: '2',
+                startTime: '9:00 AM',
+                endTime: '10:00 AM'
+            },
+            {
+                id: '3',
+                startTime: '9:00 AM',
+                endTime: '10:00 AM'
+            },
+            {
+                id: '4',
+                startTime: '9:00 AM',
+                endTime: '10:00 AM'
+            },
+            {
+                id: '5',
+                startTime: '9:00 AM',
+                endTime: '10:00 AM'
+            },
+            {
+                id: '6',
+                startTime: '9:00 AM',
+                endTime: '10:00 AM'
+            },
+        ]
     },
     "/auth": {
         "token":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4NDMzOTQxMSwiZXhwIjoxNjg0NDI1ODExfQ.gCkBS1OKgQFNN-9PbrVaAGErpXyU5bImQlJD3fDEFjHoF5RI4AXvWIpm4QHQc6S-w_wzoQfsWMvuae3PzJrkfA",

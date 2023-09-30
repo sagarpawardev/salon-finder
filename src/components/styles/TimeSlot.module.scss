@@ -1,0 +1,21 @@
+.header {
+    font-size: 15px;
+    font-family: DM Sans;
+    font-weight: 700;
+}
+
+.roundBorder {
+    border: 1px solid #EDEDED;
+    border-radius: 10px;
+}
+
+.smallCenterText {
+    font-size: x-small;
+    text-align: center;
+    font-family: DM Sans;
+    width: fit-content;
+}
+
+.selected {
+    background-color: #00E676;
+}

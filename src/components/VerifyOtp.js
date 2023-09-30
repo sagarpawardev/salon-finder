@@ -104,7 +104,7 @@ export function VerifyOtp() {
 
 	return (
 		<>
-			<div className='test-border'>
+			<div className=''>
 				<Row className='otp-container'>
 					<Col>
 						<p className='mb-5 h1 otp-title'>Verify OTP</p>

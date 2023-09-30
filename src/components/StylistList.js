@@ -18,9 +18,9 @@ export function StylistList({onSelection}) {
 
 	const [selected, setSelected] = useState(null);
 
-	const handleSelected = (selectedStylistId) => {
-		setSelected(selectedStylistId);
-		onSelection(selectedStylistId);
+	const handleSelected = (stylist) => {
+		setSelected(stylist);
+		onSelection(stylist);
 	};
 
 	return (
@@ -28,13 +28,13 @@ export function StylistList({onSelection}) {
 			<div className={`${styles.flexContainer} mb-3`}>
 				<div className={styles.title}>Select Stylist</div>
 			</div>
-			<Row xs="3">
+			<Row xs="3" lg="6">
 				{stylistList.map( (stylist, index) => (
 					<StylistListItem 
 						stylist={stylist} 
 						key={index} 
 						onSelect={handleSelected} 
-						selected={ selected === stylist?.id }/>
+						selected={ selected?.id === stylist?.id }/>
 				))}
 			</Row>
 		</>

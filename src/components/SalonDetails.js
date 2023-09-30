@@ -7,11 +7,13 @@ import client from '../utils/Client';
 import { StylistList } from './StylistList';
 import SalonServiceList from './SalonServiceList';
 import SalonHeader from './SalonHeader';
+import TimeSlotList from './TimeSlotList';
 
 export function SalonDetails() {
 	const [salon, setSalon] = useState({});
-	const [selectedServiceSet, setSelectedServiceSet] = useState(new Set());
-	const [selectedStylistId, setSelectedStylistId] = useState(undefined);
+	const [selectedServices, setSelectedServices] = useState(new Set());
+	const [selectedStylist, setSelectedStylist] = useState(undefined);
+	const [selectedSlot, setSelectedSlot] = useState(undefined);
 
 	const { salonId } = useParams();
 	const navigate = useNavigate();
@@ -23,12 +25,16 @@ export function SalonDetails() {
 			.catch(errors => console.error(errors));
 	}, [salonId]);
 
-	const handleServiceSelection = (serviceIdSet) => {
-		setSelectedServiceSet(serviceIdSet);
+	const handleServiceSelection = (services) => {
+		setSelectedServices(services);
 	};
 
-	const handleStylistSelection = (stylistId) => {
-		setSelectedStylistId(stylistId);
+	const handleStylistSelection = (stylists) => {
+		setSelectedStylist(stylists);
+	};
+
+	const handleSlotSelection = (slot) => {
+		setSelectedSlot(slot);
 	};
 
 	return (
@@ -44,6 +50,14 @@ export function SalonDetails() {
 
 				<Row className='mt-4'>
 					<SalonServiceList onSelection={handleServiceSelection}></SalonServiceList>
+				</Row>
+
+				<Row className='mt-4'>
+					<TimeSlotList 
+						stylist={selectedStylist}
+						services={selectedServices}
+						onSelection={handleSlotSelection}
+					></TimeSlotList>
 				</Row>
 			</Container>
 		</>
