@@ -9,7 +9,7 @@ import { SamplePayment } from './components/test/SamplePayment';
 import { PaymentCallback } from './components/PaymentCallback';
 import { BookingDetails } from './components/BookingDetails';
 import { SalonDetails } from './components/SalonDetails';
-import SalonStylist from './components/SalonStylist';
+import SalonStylist from './components/StylistList';
 import ProtectedRoute from './utils/ProtectedRoute';
 
 export const AuthContext = createContext(null);

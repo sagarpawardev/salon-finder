@@ -1,0 +1,33 @@
+@use "./common/padding";
+
+$imgHeight: 60px;
+$imgWidth: 60px;
+
+.profilePic {
+    height: $imgHeight;
+    width: $imgWidth;
+    object-fit: cover;
+}
+
+.overlayContainer {
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    height: $imgHeight;
+    width: $imgWidth;
+    background-color: rgb(0, 0, 0, 0.25);
+    border-radius: 50%;
+    top: 0px;
+    left: 22%;
+}
+
+.overlayIcon {
+    color: rgb(0, 230, 50);
+    background-color: rgb(256, 256, 256, 0.7);
+    border-radius: 50%;
+    top: 24px;
+    left: 24px;
+    position: absolute;
+}

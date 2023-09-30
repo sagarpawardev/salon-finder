@@ -60,31 +60,79 @@ const getMocks = {
             "price": "90"
         }
     ]},
-    "/salon/1": [
+    "/salon/1": {
+		id: 1,
+		name: 'Toni & Guy Hairdressing Salon Gachibowli ',
+		rating: {
+			value: 4.5,
+			count: '11,305',
+		},
+		location: 'Gachibowli, Hyderabad',
+		workingTime: '9:00 AM - 9:00 PM',
+	},
+    "/salon/1/services": [
         {
-            id: "HAIR_CUT",
-            name: "Hair Cut",
-            image: "https://img.freepik.com/premium-photo/young-man-with-trendy-haircut-barber-shop-barber-does-hairstyle-beard-trim_179755-8607.jpg",
-            description: "Transform your style, embrace confidence, and own the spotlight with us!",
+            id: "1",
+            name: 'Hair Wash',
+            pic: 'https://i.imgur.com/1Yf8BX0.png',
         },
         {
-            id: "FACE_MASSAGE",
-            name: "Face Massage",
-            image: "https://thumbs.dreamstime.com/z/face-massage-barbershop-smiling-men-beard-closed-eyes-black-cutting-hair-cape-barber-tattoo-black-t-80662652.jpg?w=992",
-            description: "Rediscover radiant tranquility; rejuvenate your glow with our soothing face massage."
-        }
+            id: "2",
+            name: 'Hair Cut',
+            pic: 'https://i.imgur.com/1Yf8BX0.png',
+        },
+        {
+            id: "3",
+            name: 'Face Massage',
+            pic: 'https://i.imgur.com/l3Xs7rR.png',
+        },
+        {
+            id: "4",
+            name: 'Body Massage',
+            pic: 'https://i.imgur.com/l3Xs7rR.png',
+        },
     ],
     "/salon/1/stylists": [
         {
             id: "1",
             name: "Karan Johar",
-            profilUrl: "https://media.istockphoto.com/id/494711330/photo/latin-young-man-in-a-studio.jpg?s=612x612&w=0&k=20&c=GAnGe6i43pLhhPPomrFF7aohc2uGsWGk1N2EHzLyJJw=",
+            photo: "https://i.imgur.com/bD3cbp5.png",
         },
         {
             id: "2",
             name: "Katrina Kaif",
-            profilUrl: "https://img.freepik.com/free-photo/young-woman-standing-with-arms-crossed_176474-95301.jpg?t=st=1694347310~exp=1694347910~hmac=d0f01fd5c8e40ba108e4377e019185f3e73f61616b113ee7634fe4e20a9e9f59",
+            photo: "https://i.imgur.com/xGNHCt5.png",
         },
+        // {
+        //     id: "1",
+        //     name: "Karan Johar",
+        //     photo: "https://i.imgur.com/bD3cbp5.png",
+        // },
+        // {
+        //     id: "2",
+        //     name: "Katrina Kaif",
+        //     photo: "https://i.imgur.com/xGNHCt5.png",
+        // },
+        // {
+        //     id: "1",
+        //     name: "Karan Johar",
+        //     photo: "https://i.imgur.com/bD3cbp5.png",
+        // },
+        // {
+        //     id: "2",
+        //     name: "Katrina Kaif",
+        //     photo: "https://i.imgur.com/xGNHCt5.png",
+        // },
+        // {
+        //     id: "1",
+        //     name: "Karan Johar",
+        //     photo: "https://i.imgur.com/bD3cbp5.png",
+        // },
+        // {
+        //     id: "2",
+        //     name: "Katrina Kaif",
+        //     photo: "https://i.imgur.com/xGNHCt5.png",
+        // },
     ],
     "/booking/123/checkout": {
         "price_info": {
@@ -129,11 +177,21 @@ const getMocks = {
         salon: 'Sample Salon',
         services: [
             {
+                name: 'Hair Wash',
+                pic: 'https://i.imgur.com/1Yf8BX0.png',
+            },
+            {
                 name: 'Hair Cut',
+                pic: 'https://i.imgur.com/1Yf8BX0.png',
+            },
+            {
+                name: 'Body Massage',
+                pic: 'https://i.imgur.com/l3Xs7rR.png',
             },
             {
                 name: 'Face Massage',
-            }
+                pic: 'https://i.imgur.com/l3Xs7rR.png',
+            },
         ],
         startTime: '2023-09-12 21:04:58'
     },

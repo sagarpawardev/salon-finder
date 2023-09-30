@@ -1,0 +1,15 @@
+@use "./common/padding";
+
+.profilePic {
+    height: 60px;
+    width: 60px;
+    object-fit: cover;
+}
+
+.selectableImage {
+    position: relative;
+}
+
+.selectableContent {
+    position: relative;
+}

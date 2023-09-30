@@ -1,0 +1,14 @@
+@use "./common/padding";
+
+.title {
+    color: black;
+    text-transform: uppercase;
+    font-size: 15px;
+    font-family: DM Sans;
+    font-weight: 700;
+}
+
+.flexContainer {
+    display: flex;
+    justify-content: space-between;
+}
