@@ -11,6 +11,7 @@ export function TimeSlotList({salonId, services, stylist, onSelection}) {
     const [selectedSlot, setSelectedSlot] = useState(null);
 
     useEffect(() => {
+        console.log('Reloading...');
 		client.post('/nextSlot')
 			.then(response => response.data)
 			.then(data => {
@@ -18,7 +19,7 @@ export function TimeSlotList({salonId, services, stylist, onSelection}) {
             })
 			.then(setTimeSlots)
 			.catch(errors => console.error(errors));
-	}, []);
+	}, [salonId, services, stylist]);
 
     const handleSlotClicked = (slot) => {
         setSelectedSlot(slot);
