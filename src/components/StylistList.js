@@ -28,7 +28,7 @@ export function StylistList({onSelection}) {
 			<div className={`${styles.flexContainer} mb-3`}>
 				<div className={styles.title}>Select Stylist</div>
 			</div>
-			<Row xs="3" lg="6">
+			<Row xs="3" md="4" lg="6">
 				{stylistList.map( (stylist, index) => (
 					<StylistListItem 
 						stylist={stylist} 

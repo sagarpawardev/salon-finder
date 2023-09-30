@@ -1,0 +1,5 @@
+@use './common/constants' as *;
+
+.parentContainer {
+    max-width: $max-container-width;
+}

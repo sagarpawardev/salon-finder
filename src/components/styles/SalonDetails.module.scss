@@ -1,6 +1,10 @@
 @use './common/padding';
 @use './common/constants' as *;
 
+.parentContainer {
+    max-width: $max-container-width;
+}
+
 .salonName {
     color: black;
     font-size: 32px;
@@ -13,16 +17,8 @@
     font-size: 0.9em;
 }
 
-.ratingValue {
-    @include padding.horizontalXXXSmall;
-}
-
 .paddedText {
     @include padding.horizontalXXSmall;
-}
-
-.parentContainer {
-    max-width: $max-container-width;
 }
 
 .fixedBottom {

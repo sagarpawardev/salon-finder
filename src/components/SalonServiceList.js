@@ -36,7 +36,7 @@ export function SalonServiceList({onSelection}) {
 			<div className={`${styles.flexContainer} mb-3`}>
 				<div className={styles.title}>Select Services</div>
 			</div>
-			<Row xs="3" lg="6">
+			<Row xs="3" md="4" lg="6">
 				{serviceList.map( (service, index) => (
 					<SalonServiceListItem 
 						service={service} 

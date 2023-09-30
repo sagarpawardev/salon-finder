@@ -60,6 +60,10 @@ export function SalonDetails() {
 		setSelectedSlot(slot);
 	};
 
+	const isFooterVisible = () => {
+		return selectedServices?.length && selectedStylist && selectedSlot;
+	};
+
 	return (
 		<>
 			<Container className={`px-4 py-3 ${styles.parentContainer}`}>
@@ -84,11 +88,22 @@ export function SalonDetails() {
 				</Row>
 				<Row className='p-5'/>
 			</Container>
+
+			{ isFooterVisible() && (
+				<FixedFooter onSubmit={handleSubmit}></FixedFooter>
+			)}
+		</>
+	);
+}
+
+function FixedFooter({onSubmit}) {
+
+	return (
+		<>
 			<Container 
 				className={`px-4 py-3 text-end ${styles.parentContainer} ${styles.fixedBottom} ${styles.footer}`}
-				onClick={handleSubmit}
 			>
-				<div className={styles.top}>
+				<div className={styles.top} onClick={onSubmit}>
 					<div className={styles.bottom}>Book</div>
 				</div>
 			</Container>

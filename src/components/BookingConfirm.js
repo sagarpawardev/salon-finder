@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
+import styles from './styles/BookingConfirm.module.scss';
 import Moment from "react-moment";
 import client from '../utils/Client';
 
@@ -48,9 +49,9 @@ export function BookingConfirm() {
 
     return (
         <>
-			<Container className='c-container'>
+			<Container className={styles.parentContainer}>
 				<Row>
-                    <Col xs={12} md={7} className="p-3 mx-md-3 my-2 c-white-container">
+                    <Col xs={12} md={5} className="p-3 mx-md-3 my-2 c-white-container">
                         <div className="c-text-title">Booking Details</div>
                         <Container>
                             <Row>
@@ -68,7 +69,7 @@ export function BookingConfirm() {
                             <Row>
                                 <Col>
                                     <div className="c-text-small-title text-muted mt-2">Slot</div>
-                                    <Moment format="LLL (dddd)" >{bookingDetails.startTime}</Moment>
+                                    <Moment format="LLL" >{bookingDetails.startTime}</Moment>
                                 </Col>
                             </Row>
                             <Row>
@@ -84,7 +85,7 @@ export function BookingConfirm() {
                         </Container>
                     </Col>
 
-                    <Col xs={12} md={4} className="p-3 mx-md-3 my-2 c-white-container">
+                    <Col xs={12} md={6} className="p-3 mx-md-3 my-2 c-white-container">
                         <div className="c-text-title">Price Details</div>
                         <Container>
                             <Row>

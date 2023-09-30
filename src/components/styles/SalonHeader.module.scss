@@ -1,0 +1,28 @@
+@use './common/padding';
+@use './common/constants' as *;
+
+.salonName {
+    color: black;
+    font-size: 32px;
+    font-family: DM Sans;
+    font-weight: 700;
+    line-height: 38px;
+}
+
+.smallText {
+    font-size: 0.9em;
+}
+
+.ratingValue {
+    @include padding.horizontalXXXSmall;
+}
+
+.paddedText {
+    @include padding.horizontalXXSmall;
+}
+
+.flexContainer {
+    display: flex;
+    justify-content: space-between;
+    gap: 1px
+}
