@@ -1,13 +1,20 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import './styles/SigninForm.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import VerifyOtp from './VerifyOtp';
+import styles from './styles/SigninForm.module.scss';
+import { Card, Container } from 'react-bootstrap';
 
 export function SigninForm() {
 	const [verify, setVerify] = useState(false);
+
+	useEffect(() => {
+		document.body.classList.add('imgBg');
+		return () => {
+			document.body.classList.remove('imgBg');
+		};
+	}, []);
+
 	const handleClick = () => {
 		setVerify(true);
 	};
@@ -15,13 +22,13 @@ export function SigninForm() {
 	if(!verify){
 		return (
 			<>
-				<div className='signin-center-container'>
-					<Row className="justify-content-md-center">
-						<p className='mb-5 h1 signin-title'>Sign In</p>
-						<Col>
+				<Container className={`px-4 py-3 ${styles.parentContainer}`}>
+					<div className={styles.loginContainer}>
+						<Card className={`${styles.loginSubContainer} justify-content-center`}>
+							<p className={`mb-5 h1 text-center ${styles.signinTitle}`}>Sign In</p>
 							<Form>
 								<Form.Group className="mb-3" controlId="for">
-									<Form.Control type="tel" placeholder="Enter Mobile" />
+									<Form.Control type="tel" placeholder="Enter Mobile" className='text-center'/>
 								</Form.Group>
 
 								<div className="d-grid gap-2">
@@ -30,9 +37,9 @@ export function SigninForm() {
 									</Button>
 								</div>
 							</Form>
-						</Col>
-					</Row>
-				</div>
+						</Card>
+					</div>
+				</Container>
 			</>
 		);
 	}

@@ -1,0 +1,21 @@
+@use './common/padding';
+@use './common/constants' as *;
+
+.parentContainer {
+    max-width: $max-container-width;
+}
+
+.loginContainer {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginContainer .loginSubContainer {
+    // padding: 100px;
+    height: 400px;
+    width: 400px;
+    padding: 50px;
+    background-color: white;
+}

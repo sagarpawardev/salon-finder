@@ -1,0 +1,38 @@
+@use './common/padding';
+@use './common/constants' as *;
+
+.parentContainer {
+    max-width: $max-container-width;
+}
+
+// .container {
+//     position: absolute;
+//     left: 50%;
+//     top: 40%;
+//     transform: translate(-50%, -40%);
+
+//     padding: 0% ;
+// }
+
+.otpNumber {
+    width: 60px !important;
+}
+
+.otpTitle {
+    text-align: center;
+}
+
+.loginContainer {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginContainer .loginSubContainer {
+    // padding: 100px;
+    height: 400px;
+    width: 400px;
+    padding: 50px;
+    background-color: white;
+}

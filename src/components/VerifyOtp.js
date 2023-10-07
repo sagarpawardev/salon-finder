@@ -5,9 +5,10 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 
-import './styles/VerifyOtp.css';
+import styles from './styles/VerifyOtp.module.scss';
 import { AuthContext } from '../App';
 import client from '../utils/Client';
+import { Card, Container } from 'react-bootstrap';
 
 export function VerifyOtp() {
 	const number1 = useRef(null);
@@ -104,43 +105,45 @@ export function VerifyOtp() {
 
 	return (
 		<>
-			<div className=''>
-				<Row className='otp-container'>
-					<Col>
-						<p className='mb-5 h1 otp-title'>Verify OTP</p>
-						<Row className='justify-content-center'>
-							<Col className='otp-number' id='number1'>
-								<Form.Group className="" controlId="form.number1">
-									<Form.Control type="number" placeholder="0" onChange={handleChange} ref={number1} />
-								</Form.Group>
-							</Col>
-							<Col className='otp-number' id='number2'>
-								<Form.Group className="" controlId="form.number2">
-									<Form.Control type="number" placeholder="0" onChange={handleChange} ref={number2} />
-								</Form.Group>
-							</Col>
-							<Col className='otp-number' id='number3'>
-								<Form.Group className="" controlId="form.number3">
-									<Form.Control type="number" placeholder="0" onChange={handleChange} ref={number3} />
-								</Form.Group>
-							</Col>
-							<Col className='otp-number' id='number4'>
-								<Form.Group className="" controlId="form.number4">
-									<Form.Control type="number" placeholder="0"
-										onChange={handleChange} ref={number4}
-										onKeyUp={handleKeyUp} />
-								</Form.Group>
-							</Col>
-						</Row>
-						<div className="d-grid gap-2">
-							<Button className='mt-5' variant="primary" type="submit" onClick={handleSubmit}>
-								Verify
-							</Button>
-						</div>
-					</Col>
-				</Row>
-			</div>
-		</>
+				<Container className={`px-4 py-3 ${styles.parentContainer}`}>
+					<div className={styles.loginContainer}>
+						<Card className={`${styles.loginSubContainer} justify-content-center`}>
+							<p className={`mb-5 h1 text-center ${styles.signinTitle}`}>Verify OTP</p>
+							<Form>
+								<Row className='justify-content-center'>
+									<Col className='otp-number' id='number1'>
+										<Form.Group className="" controlId="form.number1">
+											<Form.Control className='text-center' type="number" placeholder="0" onChange={handleChange} ref={number1} />
+										</Form.Group>
+									</Col>
+									<Col className='otp-number' id='number2'>
+										<Form.Group className="" controlId="form.number2">
+											<Form.Control className='text-center' type="number" placeholder="0" onChange={handleChange} ref={number2} />
+										</Form.Group>
+									</Col>
+									<Col className='otp-number' id='number3'>
+										<Form.Group className="" controlId="form.number3">
+											<Form.Control className='text-center' type="number" placeholder="0" onChange={handleChange} ref={number3} />
+										</Form.Group>
+									</Col>
+									<Col className='otp-number' id='number4'>
+										<Form.Group className="" controlId="form.number4">
+											<Form.Control className='text-center' type="number" placeholder="0"
+												onChange={handleChange} ref={number4}
+												onKeyUp={handleKeyUp} />
+										</Form.Group>
+									</Col>
+								</Row>
+								<div className="d-grid gap-2">
+									<Button className='mt-5' variant="primary" type="submit" onClick={handleSubmit}>
+										Verify
+									</Button>
+								</div>
+							</Form>
+						</Card>
+					</div>
+				</Container>
+			</>
 	);
 }
 
