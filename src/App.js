@@ -39,16 +39,36 @@ function App() {
         <AuthContext.Provider value={{ auth: auth, setAuth: setAuth }}>
           <Header />
           <Routes>
-            <Route path="/" element={<SaloonList />} />
-            <Route path="/search" element={<SaloonList />} />
+            <Route path="/" element={
+              <ProtectedRoute>
+                <SaloonList />
+              </ProtectedRoute>
+            } />
+            <Route path="/search" element={
+              <ProtectedRoute>
+                <SaloonList />
+              </ProtectedRoute>
+            }/>
             <Route path="/signin" element={<SigninForm />} />
             <Route path="/signin?ref=:id" element={<SigninForm />} />
             <Route path="/signup" element={<SignupForm />} />
-            <Route path="/verify" element={<VerifyOtp />} />
-            <Route path="/logout" element={<Logout />} />
+            {/* <Route path="/verify" element={<VerifyOtp />} /> */}
+            <Route path="/logout" element={
+              <ProtectedRoute>
+                <Logout/>
+              </ProtectedRoute>
+            } />
 
-            <Route path="/salon/:salonId" element={<SalonDetails />} />
-            <Route path="/salon/:salonId/stylist" element={<SalonStylist />} />
+            <Route path="/salon/:salonId" element={
+              <ProtectedRoute>
+                <SalonDetails />
+              </ProtectedRoute>
+            } />
+            <Route path="/salon/:salonId/stylist" element={
+              <ProtectedRoute>
+                <SalonStylist />
+              </ProtectedRoute>
+            } />
 
             <Route path="/profile" element={
               <ProtectedRoute>
@@ -71,7 +91,11 @@ function App() {
               </ProtectedRoute>
             } />
 
-            <Route path="/payment/callback" element={<PaymentCallback />} />
+            <Route path="/payment/callback" element={
+              <ProtectedRoute>
+                <PaymentCallback />
+              </ProtectedRoute>
+            } />
             <Route path="/test/paymentLink" element={<SamplePayment />} />
             <Route path="*" element={<NoPage />} />
           </Routes>

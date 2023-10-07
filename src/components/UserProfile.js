@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import { AuthContext } from '../App';
 import { useNavigate } from 'react-router-dom';
 import client from '../utils/Client';
+import styles from './styles/UserProfile.module.scss';
 
 export function UserProfile() {
 
@@ -61,9 +62,9 @@ export function UserProfile() {
 
 	return (
 		<>
-			<div className='signin-center-container'>
+			<div className={styles.container}>
 				<Row className="justify-content-md-center">
-					<p className='mb-4 h1 signin-title'>Profile</p>
+					<p className={`mb-4 h1 ${styles.title}`}>Profile</p>
 					<Col>
 						<Form onSubmit={ (e) => {e.preventDefault(); handleSubmit();} }>
 							<Form.Group className="mb-4" controlId="formName">
