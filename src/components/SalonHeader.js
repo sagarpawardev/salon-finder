@@ -16,9 +16,7 @@ export function SalonHeader({salon}) {
 					<span>
 						<Watch size={12} className="align-baseline"/>
 					</span>
-					<span className={`${styles.paddedText}`}>
-						{salon?.workingTime}
-					</span>
+					<span className={`${styles.paddedText}`}>{salon?.start_time}</span> - <span className={`${styles.paddedText}`}>{(salon?.end_time)%12}</span>
 				</div>
 
 				<div className={`text-muted my-1 ${styles.smallText}`}>

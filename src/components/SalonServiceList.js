@@ -13,18 +13,19 @@ export function SalonServiceList({onSelection}) {
 	useEffect(() => {
 		client.get(`/salon/${salonId}/services`)
 			.then(response => response.data)
-			.then(setServiceList)
+			.then(data => setServiceList(data.services))
 			.catch(errors => console.error(errors));
 	}, [salonId]);
 
 	const handleSelectionChange = (selection) => {
 		const serviceId = selection?.service?.id;
-		const newSelection = {...selectedServices};
+		let newSelection = {...selectedServices};
 		if(selection?.selected) {
-			newSelection[serviceId] = selection?.service;
+			newSelection[serviceId] = selection?.service.name;
 		}
 		else {
-			delete newSelection[serviceId];
+			newSelection = newSelection.filter((item) => item.name !== selection?.service.name);
+			setSelectedServices(newSelection)
 		}
 
 		setSelectedServices(newSelection);
@@ -42,7 +43,7 @@ export function SalonServiceList({onSelection}) {
 						service={service} 
 						key={index} 
 						onSelectionChange={handleSelectionChange}
-						selected={selectedServices[service?.id]}/>
+						selected={selectedServices[service?.name]}/>
 				))}
 			</Row>
 		</>

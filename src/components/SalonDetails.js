@@ -1,6 +1,8 @@
 import { React, useEffect, useState } from 'react';
 import styles from './styles/SalonDetails.module.scss';
 import { Container, Row } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import moment from "moment";
 
 import { useNavigate, useParams } from 'react-router-dom';
 import client from '../utils/Client';
@@ -14,6 +16,8 @@ export function SalonDetails() {
 	const [selectedServices, setSelectedServices] = useState(new Set());
 	const [selectedStylist, setSelectedStylist] = useState(undefined);
 	const [selectedSlot, setSelectedSlot] = useState(undefined);
+	const [selectedAfterMin, setSelectedAfterMin] = useState(undefined);
+	const [availableSlot, setAvailableSlot] = useState(undefined);
 
 	const { salonId } = useParams();
 	const navigate = useNavigate();
@@ -37,12 +41,38 @@ export function SalonDetails() {
 		}
 	}
 
+	const findSlot = () => {
+		client.post('/nextSlot', {
+			services: selectedServices,
+			stylist_id: selectedStylist.stylist_id,
+			salon_id: salonId,
+			after_min: selectedAfterMin?.value,
+			start_time: selectedSlot?.value
+		})
+			.then(response => response.data)
+			.then(data => 
+				setAvailableSlot(data.available_slots[0])
+			)
+			.then(handleBookingStatus)
+			.catch(errors => console.error(errors));
+	}
+
 	const handleSubmit = () => {
-		client.post('/slot/reserve')
+		var date = moment(new Date()).format('DD-MM-yyyy HH:mm:ss')
+		client.post('/slot/reserve', {
+			stylist_id: selectedStylist.stylist_id,
+			date: date,
+			salon_id: salonId,
+			start_time: availableSlot.start_time,
+			context: {
+				services: selectedServices
+			}
+		})
 			.then(response => response.data)
 			.then(data => ({
 				bookingId: data?.booking_id,
-				status: data?.status
+				status: data?.status,
+				
 			}))
 			.then(handleBookingStatus)
 			.catch(errors => console.error(errors));
@@ -56,12 +86,15 @@ export function SalonDetails() {
 		setSelectedStylist(stylists);
 	};
 
-	const handleSlotSelection = (slot) => {
-		setSelectedSlot(slot);
+	const handleSlotSelection = (slot, value) => {
+		if (value === 'slot')
+			setSelectedSlot(slot);
+		else if (value === 'afterMin')
+			setSelectedAfterMin(slot)
 	};
 
 	const isFooterVisible = () => {
-		return selectedServices?.length && selectedStylist && selectedSlot;
+		return selectedServices?.length && selectedStylist && (selectedSlot || selectedAfterMin);
 	};
 
 	return (
@@ -87,10 +120,17 @@ export function SalonDetails() {
 					></TimeSlotList>
 				</Row>
 				<Row className='p-5'/>
+
 			</Container>
 
+			
+
 			{ isFooterVisible() && (
+				<div>
+				<FindSlot onSubmit={findSlot}></FindSlot>
+
 				<FixedFooter onSubmit={handleSubmit}></FixedFooter>
+				</div>
 			)}
 		</>
 	);
@@ -108,6 +148,16 @@ function FixedFooter({onSubmit}) {
 				</div>
 			</Container>
 		</>
+	);
+}
+
+function FindSlot({onSubmit}) {
+	return (
+		<div className="d-grid gap-2">
+				<Button className='mt-5' variant="primary" type="button" onClick={onSubmit}>
+					Find Available Time
+				</Button>
+			</div>
 	);
 }
 

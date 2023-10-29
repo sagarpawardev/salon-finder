@@ -3,15 +3,15 @@ import styles from './styles/TimeSlotList.module.scss';
 import { useEffect, useState } from 'react';
 import TimeSlot from './TimeSlot';
 import { client } from '../utils';
-import Moment from 'react-moment';
 
 export function TimeSlotList({salonId, services, stylist, onSelection}) {
 
     const [timeSlots, setTimeSlots] = useState([]);
     const [selectedSlot, setSelectedSlot] = useState(null);
+    const [selectedAfterMin, setSelectedAfterMin] = useState(null);
 
     useEffect(() => {
-		client.post('/nextSlot')
+		client.get('/slotsToDisplay')
 			.then(response => response.data)
 			.then(data => {
                 return [data]
@@ -22,34 +22,63 @@ export function TimeSlotList({salonId, services, stylist, onSelection}) {
 
     const handleSlotClicked = (slot) => {
         setSelectedSlot(slot);
-        onSelection(slot);
-    } 
+        onSelection(slot, 'slot');
+    }
+    
+    const handleAfterMinClicked = (slot) => {
+        setSelectedAfterMin(slot);
+        onSelection(slot, 'afterMin');
+    }
 
     return (
         <>
             <div className={`${styles.flexContainer} mb-3`}>
                 <div className={styles.title}>Time Slot</div>
             </div>
-            {timeSlots.map( (timeSlot, index) => (
-                <div key={index} className='mb-3'>
-                    <div className={styles.header}>
-                        <Moment format='d MMM (dddd)'>{timeSlot?.date}</Moment>
+            <div>
+                {timeSlots.map( (timeSlot, index) => (
+                    <div key={index} className='mb-3'>
+                        {/* <div className={styles.header}>
+                            <Moment format='d MMM (dddd)'>{timeSlot?.date}</Moment>
+                        </div> */}
+                        <Container>
+                            <Row xs="2" sm="3" md="4" lg="5">
+                                {timeSlot?.default_slots?.map( (slot, idx) => (
+                                    <Col key={idx}>
+                                        <TimeSlot 
+                                            slot={slot}
+                                            selected={selectedAfterMin?.id === slot?.id}
+                                            onClick={ handleAfterMinClicked }
+                                        />
+                                    </Col>
+                                ))}
+                            </Row>
+                        </Container>
                     </div>
-                    <Container>
-                        <Row xs="2" sm="3" md="4" lg="5">
-                            {timeSlot?.slots?.map( (slot, idx) => (
-                                <Col key={idx}>
-                                    <TimeSlot 
-                                        slot={slot}
-                                        selected={selectedSlot?.id === slot?.id}
-                                        onClick={ handleSlotClicked }
-                                    />
-                                </Col>
-                            ))}
-                        </Row>
-                    </Container>
-                </div>
-            ))}
+                ))}
+            </div>
+            <div>
+                {timeSlots.map( (timeSlot, index) => (
+                    <div key={index} className='mb-3'>
+                        {/* <div className={styles.header}>
+                            <Moment format='d MMM (dddd)'>{timeSlot?.date}</Moment>
+                        </div> */}
+                        <Container>
+                            <Row xs="2" sm="3" md="4" lg="5">
+                                {timeSlot?.current_slots?.map( (slot, idx) => (
+                                    <Col key={idx}>
+                                        <TimeSlot 
+                                            slot={slot}
+                                            selected={selectedSlot?.id === slot?.id}
+                                            onClick={ handleSlotClicked }
+                                        />
+                                    </Col>
+                                ))}
+                            </Row>
+                        </Container>
+                    </div>
+                ))}
+            </div>
         </>
     );
 }

@@ -1,16 +1,17 @@
 import { useContext, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import { useNavigate } from 'react-router-dom';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 
 import styles from './styles/VerifyOtp.module.scss';
 import { AuthContext } from '../App';
 import client from '../utils/Client';
 import { Card, Container } from 'react-bootstrap';
 
-export function VerifyOtp() {
+export function VerifyOtp({email, sendOtpResponse}) {
 	const number1 = useRef(null);
 	const number2 = useRef(null);
 	const number3 = useRef(null);
@@ -18,6 +19,9 @@ export function VerifyOtp() {
 	const navigate = useNavigate();
 
 	const { setAuth } = useContext(AuthContext);
+
+	const location = useLocation();
+	const pathname = location.pathname;
 
 	const otpMap = {
 		'form.number1': {
@@ -42,29 +46,66 @@ export function VerifyOtp() {
 
 	const handleSuccess = (authData) => {
 		setAuth( authData );
+
+		if (pathname.includes('partner')) {
+			client.get('/stylist', )
+			.then(response => response.data)
+			.then(stylist => {
+				if(stylist?.name == null || stylist?.phone == null) {
+					navigate("/partner/profile")
+				} else {
+					navigate("/partner")
+				}
+			});
+			navigate('/partner/');
+		}
+		else {
+			
 		
-		client.get('/user')
+		client.get('/user/detailsPreferences', )
 			.then(response => response.data)
 			.then(userData => {
-				if(userData?.gender && userData?.city){
-					setAuth( {...authData, user: {...userData}});
-					navigate('/search');
+				setAuth( {...authData, user: {...userData}});
+				if(userData?.user?.name == null || userData?.user?.phone == null) {
+					navigate('/profile', { state: { email: email } });
+				} else if (userData?.city == null || userData?.locality == null) {
+					navigate('/preference');
 				}
 				else{
-					navigate('/profile');
+					navigate({
+						pathname: "/search",
+						search: createSearchParams({
+							locality: userData?.locality
+						}).toString()
+					});
 				}
 			})
 			.catch(errors => console.error(errors));
+
+		}
 	};
 
 	const handleSubmit = () => {
 		const enteredOtp = number1.current.value + number2.current.value + number3.current.value + number4.current.value;
-		client.post("/auth", {
-			"otp": enteredOtp
+		const pathname = location.pathname;
+		let otpUsecase = ''
+		if (pathname.includes('partner'))
+			otpUsecase = 'STYLIST_LOGIN';
+		else
+			otpUsecase = 'USER_LOGIN';
+
+
+		client.post("/login", {
+			"otp": enteredOtp,
+			email: email,
+			created_at: sendOtpResponse.created_at,
+			use_case: otpUsecase
 		})
 		.then(request => request.data)
 		.then(data => {
+			console.log(data.token)
 			if(data?.token){
+				client.defaults.headers.common['Authorization'] = 'Bearer ' + data.token
 				handleSuccess(data);
 			}
 			else{
@@ -135,7 +176,7 @@ export function VerifyOtp() {
 									</Col>
 								</Row>
 								<div className="d-grid gap-2">
-									<Button className='mt-5' variant="primary" type="submit" onClick={handleSubmit}>
+									<Button className='mt-5' variant="primary" type="button" onClick={handleSubmit}>
 										Verify
 									</Button>
 								</div>

@@ -8,3 +8,7 @@ export * from './BookingConfirm';
 export * from './NoPage';
 export * from './UserProfile';
 export * from './BookingList';
+export * from './SalonForm';
+export * from './AdminView';
+export * from './UserPreference';
+export * from './StylistProfile';

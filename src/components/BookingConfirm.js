@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
+import moment from "moment";
 import styles from './styles/BookingConfirm.module.scss';
 import Moment from "react-moment";
 import client from '../utils/Client';
@@ -15,7 +16,11 @@ export function BookingConfirm() {
     const [ bookingDetails, setBookingDetails ] = useState( {} );
 
     const handlePayNow = () => {
-        client.post('/payment/init')
+        var date = moment(new Date()).format('DD-MM-yyyy HH:mm:ss')
+        client.post('/payment/init', {
+            booking_id: bookingId,
+            date: date
+        })
             .then(response => response.data)
             .then(data => ({
                 paymentUrl: data?.redirect_url
@@ -69,7 +74,9 @@ export function BookingConfirm() {
                             <Row>
                                 <Col>
                                     <div className="c-text-small-title text-muted mt-2">Slot</div>
-                                    <Moment format="LLL" >{bookingDetails.startTime}</Moment>
+                                    <Moment format="LLL" >{bookingDetails.start_time}</Moment>
+                                    -
+                                    <Moment format="LLL" >{bookingDetails.end_time}</Moment>
                                 </Col>
                             </Row>
                             <Row>

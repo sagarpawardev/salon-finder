@@ -15,7 +15,7 @@ export function TimeSlot({slot, selected, onClick}) {
                         ${selected ? styles.selected : ''}
                     `}
             >
-                {slot.startTime} - {slot.endTime}
+                {slot.display_name}
             </div>
         </>
     );

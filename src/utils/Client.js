@@ -1,108 +1,132 @@
-// import axios from "axios";
+import axios from "axios";
 
-// import { apiBaseUrl } from '../utils';
-// const client = axios.create({
+import { apiBaseUrl } from './CommonUtil';
+
+// export const client = axios.create({
 //     baseURL:  apiBaseUrl()
 // });
 
+// client.post
+
 const getMocks = {
-    "/salons": {
-        city: 'Pune',
-        salons: [
-        {
-            "id": "1",
-            "name": "Bob Unisex Saloon and Total Transformation for Hair ",
-            "address": "Gachibowli, Hyderabad",
-            "phone": "+919876543210",
-            "type": "HE",
-            "photo": "https://picsum.photos/200?1",
-            "workingTime": "9:00 AM - 9:00 PM", 
-            "price": "90"
+    "/user/detailsPreferences": {
+        "user": {
+          "user_id": "U1S9XZ42AH",
+          "name": null,
+          "phone": "7696441092",
+          "email": "atreides@gmail.com"
         },
+        "city": 1,
+        "locality": 1,
+        "gender": "HE"
+      },
+    "/salonsForUser": {
+        "salon_list": [
+          {
+            "salon_id": "SLESD1R1T5BOC19S",
+            "name": "Toni & Guy",
+            "address_link": "string",
+            "address": "string",
+            "phone": "7696441092",
+            "salon_type": "HE",
+            "start_time": 8,
+            "end_time": 22
+          },
+          {
+            "salon_id": "SLESD1R1T5BOC19S",
+            "name": "Bob Unisex Saloon and Total Transformation for Hair",
+            "address_link": "string",
+            "address": "string",
+            "phone": "7696441092",
+            "salon_type": "HE",
+            "start_time": 8,
+            "end_time": 22
+          }
+        ]
+      },
+    "/salon/SLESD1R1T5BOC19S": {
+        "salon_id": "",
+        "name": "Toni & Guy",
+        "address_link": "string",
+        "address": "string",
+        "phone": "7696441092",
+        "salon_type": "HE",
+        "start_time": 8,
+        "end_time": 22
+      },
+    "/salon/SLESD1R1T5BOC19S/services": {
+        "services": [
+          {
+            "name": "HAIR_CUT",
+            "display_name": "Hair Cut",
+            "time": 30,
+            "price": 100
+          },
+          {
+            "name": "FACE_MASSAGE",
+            "display_name": "Face Massage",
+            "time": 30,
+            "price": 200
+          }
+        ]
+      },
+    "/city": {
+        "city_list": [
+          {
+            "id": 1,
+            "city": "Bangalore"
+          }
+        ]
+      },
+    "/locality/city/1": {
+        "locality_response_list": [
+          {
+            "id": 1,
+            "locality": "Green Glen Layout"
+          }
+        ]
+      },  
+    
+    
+    // [
+    //     {
+    //         id: "1",
+    //         name: 'Hair Wash',
+    //         pic: 'https://i.imgur.com/1Yf8BX0.png',
+    //     },
+    //     {
+    //         id: "2",
+    //         name: 'Hair Cut',
+    //         pic: 'https://i.imgur.com/1Yf8BX0.png',
+    //     },
+    //     {
+    //         id: "3",
+    //         name: 'Face Massage',
+    //         pic: 'https://i.imgur.com/l3Xs7rR.png',
+    //     },
+    //     {
+    //         id: "4",
+    //         name: 'Body Massage',
+    //         pic: 'https://i.imgur.com/l3Xs7rR.png',
+    //     },
+    // ],
+    "/salon/SLESD1R1T5BOC19S/stylists/available": 
         {
-            "id": "2",
-            "name": "Pretty Parlor",
-            "address": "Gachibowli, Hyderabad",
-            "phone": "+919876543210",
-            "type": "HE",
-            "photo": "https://picsum.photos/200?2",
-            "workingTime": "9:00 AM - 9:00 PM", 
-            "price": "90"
-        },
-        {
-            "id": "3",
-            "name": "Serenity Salon",
-            "address": "Gachibowli, Hyderabad",
-            "phone": "+919876543210",
-            "type": "HE",
-            "photo": "https://picsum.photos/200?3",
-            "workingTime": "9:00 AM - 9:00 PM", 
-            "price": "90"
-        },
-        {
-            "id": "4",
-            "name": "Tres Beaux",
-            "address": "Gachibowli, Hyderabad",
-            "phone": "+919876543210",
-            "type": "HE",
-            "photo": "https://picsum.photos/200?4",
-            "workingTime": "9:00 AM - 9:00 PM", 
-            "price": "90"
-        },
-        {
-            "id": "5",
-            "name": "Total Transformation",
-            "address": "Gachibowli, Hyderabad",
-            "phone": "+919876543210",
-            "type": "HE",
-            "photo": "https://picsum.photos/200?5",
-            "workingTime": "9:00 AM - 9:00 PM", 
-            "price": "90"
-        }
-    ]},
-    "/salon/1": {
-		id: 1,
-		name: 'Toni & Guy Hairdressing Salon Gachibowli ',
-		rating: {
-			value: 4.5,
-			count: '11,305',
-		},
-		location: 'Gachibowli, Hyderabad',
-		workingTime: '9:00 AM - 9:00 PM',
-	},
-    "/salon/1/services": [
-        {
-            id: "1",
-            name: 'Hair Wash',
-            pic: 'https://i.imgur.com/1Yf8BX0.png',
-        },
-        {
-            id: "2",
-            name: 'Hair Cut',
-            pic: 'https://i.imgur.com/1Yf8BX0.png',
-        },
-        {
-            id: "3",
-            name: 'Face Massage',
-            pic: 'https://i.imgur.com/l3Xs7rR.png',
-        },
-        {
-            id: "4",
-            name: 'Body Massage',
-            pic: 'https://i.imgur.com/l3Xs7rR.png',
-        },
-    ],
-    "/salon/1/stylists": [
-        {
-            id: "1",
-            name: "Karan Johar",
-            photo: "https://i.imgur.com/bD3cbp5.png",
-        },
-        {
-            id: "2",
-            name: "Katrina Kaif",
-            photo: "https://i.imgur.com/xGNHCt5.png",
-        },
+            "stylist_list": [
+              {
+                "stylist_id": "ST-1RE9NK30A75DVCNFE",
+                "phone": null,
+                "name": "Tyler Durden",
+                "gender": "HE"
+              },
+              {
+                "stylist_id": "ST-1RE9NK30A75DVCNFG",
+                "phone": null,
+                "name": "Harley Quinn",
+                "gender": "SHE"
+              }
+            ]
+          },
         // {
         //     id: "1",
         //     name: "Karan Johar",
@@ -133,22 +157,22 @@ const getMocks = {
         //     name: "Katrina Kaif",
         //     photo: "https://i.imgur.com/xGNHCt5.png",
         // },
-    ],
     "/booking/123/checkout": {
         "price_info": {
-          "convenienceFee": 30,
-          "totalAmount": 270,
-          "discount": 10,
-          "amountToPay": 290
+          "convenienceFee": 20.0,
+          "totalAmount": 20.0,
+          "discount": 10.0,
+          "amountToPay": 10.0
         },
         "services": [
-          "HAIR_CUT",
-          "FACE_MASSAGE"
+          "Hair Cut",
+          "Face Massage"
         ],
-        "stylist": "Karan Johar",
-        "salon": "Sample Salon",
-        "start_time": "2023-09-12 21:04:58"
-    },
+        "stylist": "Tyler Durden",
+        "salon": "Test Salon",
+        "start_time": "28-10-2023 18:07:36",
+        "end_time": "28-10-2023 18:37:36"
+      },
     "/bookings": [
         {
             id: '123',
@@ -221,14 +245,79 @@ const getMocks = {
             "Pune"
         },
         "gender":"male"
-    }
+    },
+    "/booking/B3XRM42AHCNFE/checkout": {
+        "price_info": {
+          "convenienceFee": 20.0,
+          "totalAmount": 20.0,
+          "discount": 10.0,
+          "amountToPay": 10.0
+        },
+        "services": [
+          "Hair Cut"
+        ],
+        "stylist": "Tyler Durder",
+        "salon": "Toni & Guy",
+        "start_time": "28-10-2023 18:37:17",
+        "end_time": "28-10-2023 19:07:17"
+      },
+      "/slotsToDisplay": {
+        "default_slots": [
+          {
+            "display_name": "After 10 min",
+            "value": 10
+          },
+          {
+            "display_name": "After 15 min",
+            "value": 15
+          },
+          {
+            "display_name": "After 20 min",
+            "value": 20
+          }
+        ],
+        "current_slots": [
+            {
+                "display_name": "8am - 10am",
+                "value": 8
+              },
+            {
+                "display_name": "10am - 12pm",
+                "value": 10
+              },
+            {
+                "display_name": "12pm - 2pm",
+                "value": 12
+              },
+            {
+                "display_name": "2pm - 4pm",
+                "value": 14
+              },
+            {
+                "display_name": "4pm - 6pm",
+                "value": 16
+              },  
+          {
+            "display_name": "6pm - 8pm",
+            "value": 18
+          },
+          {
+            "display_name": "8pm - 10pm",
+            "value": 20
+          }
+        ]
+      }
 };
 
 const postMocks = {
     "/slot/reserve": {
-        "booking_id": "123",
-        "status": "RESERVED"
-    },
+        "booking_id": "B3XRM42AHCNFE",
+        "status": "RESERVED",
+        "otp": null,
+        "stylist": null,
+        "user": null,
+        "date_time": null
+      },
     "/payment/init": {
         "redirect_url": "/test/paymentLink?bookingId=123",
         "payment_id": "45677654567",
@@ -240,40 +329,16 @@ const postMocks = {
         "status": "SUCCESS"
     },
     "/nextSlot": {
-        date: "2023-06-01",
-        slots: [
-            {
-                id: '1',
-                startTime: '9:00 AM',
-                endTime: '10:00 AM'
-            },
-            {
-                id: '2',
-                startTime: '9:00 AM',
-                endTime: '10:00 AM'
-            },
-            {
-                id: '3',
-                startTime: '9:00 AM',
-                endTime: '10:00 AM'
-            },
-            {
-                id: '4',
-                startTime: '9:00 AM',
-                endTime: '10:00 AM'
-            },
-            {
-                id: '5',
-                startTime: '9:00 AM',
-                endTime: '10:00 AM'
-            },
-            {
-                id: '6',
-                startTime: '9:00 AM',
-                endTime: '10:00 AM'
-            },
+        "available_slots": [
+          {
+            "slot": "18-20",
+            "start_time": 1837,
+            "end_time": 1907,
+            "display_start_time": "28-10-2023 18:37:26",
+            "display_end_time": "28-10-2023 19:07:26"
+          }
         ]
-    },
+      },
     "/auth": {
         "token":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4NDMzOTQxMSwiZXhwIjoxNjg0NDI1ODExfQ.gCkBS1OKgQFNN-9PbrVaAGErpXyU5bImQlJD3fDEFjHoF5RI4AXvWIpm4QHQc6S-w_wzoQfsWMvuae3PzJrkfA",
         "username":"admin",
@@ -285,7 +350,15 @@ const postMocks = {
             "Pune"
         },
         "gender":"male"
-    }
+    },
+    "/login": {
+        token: "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6IlUxUzlYWjQyQUgiLCJpYXQiOjE2OTg0OTk3NTcsImV4cCI6MTY5ODY3MjU1N30.1yBAl8YRHtJARC0L0oU_nNLrwzkbJlWL4V4UeFEzxyttjeFynb1Apo1vzmLKgDz8qTUjP_58MIbKrobstAydGQ"
+    },
+    "/send_otp": {
+        "user_id": null,
+        "created_at": 1698499738789,
+        "phone": null
+      }
 };
 
 const deleteMocks = {
@@ -294,12 +367,12 @@ const deleteMocks = {
 
 const patchMocks = {
     "/user": {
-        "name": "sagar",
-        "gender": "male",
-        "city": {
-            "id": 1
-        }
-    }
+        "user_id": "U1GDTJPUJNOG5TES5I",
+        "name": "Atreides",
+        "phone": "7696441091",
+        "email": "tylerdurden@gmail.com"
+    },
+    "/updatePreference": {}
 }
 
 export const client = {
@@ -315,6 +388,12 @@ export const client = {
     patch: (url) => Promise.resolve({
         data: patchMocks[url] 
     }),
+    defaults : {
+        headers : {
+            common : {
+                Authorization : ''
+            }
+        }}
 };
 
 export default client;

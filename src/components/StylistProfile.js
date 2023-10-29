@@ -8,10 +8,12 @@ import { useNavigate } from 'react-router-dom';
 import client from '../utils/Client';
 import styles from './styles/UserProfile.module.scss';
 
-export function UserProfile() {
+export function StylistProfile() {
 
 	const [isUpdating, setIsUpdating] = useState(null);
 	const { auth, setAuth } = useContext(AuthContext);
+	const [selectedGender, setSelectedGender] = useState(null);
+	const [selectedStylistFor, setSelectedStylistForr] = useState(null);
 	const refName = useRef(null);
 	const refPhone = useRef(null);
 	const navigate = useNavigate();
@@ -25,7 +27,7 @@ export function UserProfile() {
 
 	const handleSuccess = (data) => {
 		setAuth({...auth, user: {...data}});
-		navigate("/preference");
+		navigate("/partner");
 	};
 
 	const handleSubmit = () => {
@@ -34,10 +36,12 @@ export function UserProfile() {
 		const name = refName.current.value;
 		const phone = refPhone.current.value;
 
-		client.patch("/user", {
+		client.patch("/stylist", {
 			"name": name,
 			'phone': phone,
-			'email': email
+			'email': email,
+			'gender': selectedGender,
+			'stylist_for': selectedStylistFor
 		}).then( response => {
 			if(response?.data){
 				handleSuccess(response.data);
@@ -80,6 +84,56 @@ export function UserProfile() {
 									/>
 							</Form.Group>
 
+							<Form.Group className="mb-4" controlId="formGender">
+								<Form.Label>Gender</Form.Label>
+								<div>
+									<Form.Check
+										inline
+										type="radio"
+										name="groupGender"
+										defaultChecked = {auth?.gender === 'male'}
+										onChange={ () => setSelectedGender("HE") }
+										label={`Male`} />
+
+									<Form.Check
+										inline
+										type="radio"
+										name="groupGender"
+										defaultChecked = {auth?.gender === 'female'}
+										onChange={ () => setSelectedGender("SHE") }
+										label={`Female`} />
+								</div>
+							</Form.Group>
+
+							<Form.Group className="mb-4" controlId="formStylistFor">
+								<Form.Label>Stylist For</Form.Label>
+								<div>
+									<Form.Check
+										inline
+										type="radio"
+										name="groupStylistFor"
+										defaultChecked = {auth?.gender === 'male'}
+										onChange={ () => setSelectedStylistForr("HE") }
+										label={`Male`} />
+
+									<Form.Check
+										inline
+										type="radio"
+										name="groupStylistFor"
+										defaultChecked = {auth?.gender === 'female'}
+										onChange={ () => setSelectedStylistForr("SHE") }
+										label={`Female`} />
+
+									<Form.Check
+										inline
+										type="radio"
+										name="groupStylistFor"
+										defaultChecked = {auth?.gender === 'unisex'}
+										onChange={ () => setSelectedStylistForr("UNISEX") }
+										label={`Unisex`} />
+								</div>
+							</Form.Group>
+
 							<div className="d-grid gap-2 mt-4">
 								<Button variant="primary" type="submit" disabled={isUpdating}>
 									Update
@@ -93,4 +147,4 @@ export function UserProfile() {
 	);
 }
 
-export default UserProfile;
+export default StylistProfile;

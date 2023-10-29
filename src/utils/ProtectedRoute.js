@@ -3,7 +3,8 @@ import { useContext } from "react";
 import { AuthContext } from "../App";
 
 const importantPrefMissing = (auth) => {
-    return !auth?.user?.city || !auth?.user?.gender;
+    // return !auth?.user?.city || !auth?.user?.gender;
+    return auth?.user?.user ? !auth.user.user.name : !auth.user.name;
 };
 
 export const ProtectedRoute = ({ children }) => {

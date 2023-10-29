@@ -10,9 +10,9 @@ export function StylistList({onSelection}) {
 	const { salonId } = useParams();
 
 	useEffect(() => {
-		client.get(`/salon/${salonId}/stylists`)
+		client.get(`/salon/${salonId}/stylists/available`)
 			.then(response => response.data)
-			.then(setStylistList)
+			.then(data => setStylistList(data.stylist_list))
 			.catch(errors => console.error(errors));
 	}, [salonId]);
 
@@ -34,7 +34,7 @@ export function StylistList({onSelection}) {
 						stylist={stylist} 
 						key={index} 
 						onSelect={handleSelected} 
-						selected={ selected?.id === stylist?.id }/>
+						selected={ selected?.id === stylist?.stylist_id }/>
 				))}
 			</Row>
 		</>

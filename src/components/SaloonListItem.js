@@ -34,7 +34,7 @@ export function SaloonListItem(props) {
 						<Row className={`${styles.smallText} text-muted`}>
 							<Col>
 								<Watch size={12} className="align-baseline"/>
-								<span className='mx-1'>{props.salon?.workingTime}</span>
+								<span className='mx-1'>{props.salon?.start_time}</span> - <span className='mx-1'>{(props.salon?.end_time)%12}</span>
 							</Col>
 						</Row>
 					</Col>

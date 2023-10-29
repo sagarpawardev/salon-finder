@@ -1,7 +1,7 @@
 import { React, useContext, useEffect, useState } from 'react'
 import styles from './styles/SaloonList.module.scss';
 import { Col, Container, Row } from 'react-bootstrap';
-
+import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import client from '../utils/Client';
 import { AuthContext } from '../App';
@@ -13,6 +13,8 @@ export function SaloonList() {
 	const { auth } = useContext(AuthContext);
 	const navigate = useNavigate();
 
+	const localityId = new URLSearchParams(useLocation().search).get("locality")
+
 	const handleLocationClick = (event) => {
 		event.preventDefault();
 		navigate('/profile');
@@ -23,29 +25,12 @@ export function SaloonList() {
 		navigate(`/salon/${selectedSalonId}`);
 	};
 
-	const mapSalon = (salonList) => {
-		return salonList.map( (salon) => ({
-			rating: {
-				value: '5.0',
-				count: 100,
-			},
-			...salon,
-		}));
-	};
-
 	useEffect(() => {
-		client.get('/salons', {
-				params: {
-					city: auth?.user?.city?.name,
-			  	},
-			})
+		client.get('/salonsForUser')
 			.then(response => response.data)
 			.then(data => {
-				setCity(data.city);
-				return data.salons;
+				setSalonList(data.salon_list)
 			})
-			.then(mapSalon)
-			.then(setSalonList)
 			.catch(errors => console.error(errors));
 	}, [auth?.user?.city?.name]);
 
@@ -54,14 +39,14 @@ export function SaloonList() {
 			<Container>
 				<Row className={`${styles.listHeader} justify-content-md-center`}>
 					<Col lg="8">
-						Salons in <u className={styles.cityPref} onClick={handleLocationClick}>{city}</u>
+						Salons in your area..
 					</Col>
 				</Row>
 
 				<Row className="justify-content-md-center">
 					<Col md="auto">
 						{salonList.map((salon, index) => (
-							<div key={index} data-salon-id={salon?.id} onClick={handleClickSalon} className={styles.clickable}>
+							<div key={index} data-salon-id={salon?.salon_id} onClick={handleClickSalon} className={styles.clickable}>
 								<SaloonListItem salon={salon}/>
 
 								{	index !== salonList.length-1 && (
