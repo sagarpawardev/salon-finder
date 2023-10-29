@@ -2,12 +2,16 @@ export function getLocalAuth() {
     const auth =  localStorage.getItem('auth');
     if(auth) {
         const credentials = JSON.parse(auth);
-        if(new Date(credentials.expireAt) > new Date()){
-            return credentials;
-        }
-        else{
-            removeLocalAuth();
-        }
+
+        //TODO: Enable this after expireAt is added in api
+        // if(new Date(credentials.expireAt) > new Date()){
+        //     return credentials;
+        // }
+        // else{
+        //     removeLocalAuth();
+        // }
+
+        return credentials;
     }
 
     return undefined;

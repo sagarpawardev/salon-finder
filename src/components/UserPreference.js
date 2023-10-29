@@ -47,9 +47,9 @@ export function UserPreference() {
 		const gender = selectedGender;
 
 		client.patch("/updatePreference", {
-			"city_id": selectedCity.id,
+			"city_id": selectedCity?.id,
 			'gender': gender,
-			'locality_id': selectedLocality.id,
+			'locality_id': selectedLocality?.id,
 		}).then( response => {
 			// if(response?.data){
 				handleSuccess(response.data);
@@ -88,6 +88,7 @@ export function UserPreference() {
 								<Form.Label>Gender</Form.Label>
 								<div>
 									<Form.Check
+										required
 										inline
 										type="radio"
 										name="groupGender"
@@ -96,6 +97,7 @@ export function UserPreference() {
 										label={`Male`} />
 
 									<Form.Check
+										required
 										inline
 										type="radio"
 										name="groupGender"
@@ -108,7 +110,7 @@ export function UserPreference() {
 							<Form.Group className="mb-3" controlId="formPreferredCity">
 								<Form.Label>Preferred City</Form.Label>
 								<div >
-									<Dropdown className="d-grid gap-2">
+									<Dropdown className="d-grid gap-2" required>
 										<Dropdown.Toggle
 											variant={selectedCity ? "outline-success" : "outline-secondary"}>
 											{selectedCity ? selectedCity.city : 'Select City'}
@@ -133,7 +135,7 @@ export function UserPreference() {
 							<Form.Group className="mb-3" controlId="formPreferredCity">
 								<Form.Label>Preferred Locality</Form.Label>
 								<div >
-									<Dropdown className="d-grid gap-2">
+									<Dropdown className="d-grid gap-2" required>
 										<Dropdown.Toggle
 											variant={selectedLocality ? "outline-success" : "outline-secondary"}>
 											{selectedLocality ? selectedLocality.locality : 'Select City'}
@@ -144,6 +146,7 @@ export function UserPreference() {
 											{
 												localities.map((locality) => (
 													<Dropdown.Item key={locality.id} 
+														className={styles.dropdownMenu}
 														onClick={() => { setSelectedLocality(locality) }}>
 														{locality.locality}
 													</Dropdown.Item>

@@ -19,13 +19,15 @@ export function SalonHeader({salon}) {
 					<span className={`${styles.paddedText}`}>{salon?.start_time}</span> - <span className={`${styles.paddedText}`}>{(salon?.end_time)%12}</span>
 				</div>
 
-				<div className={`text-muted my-1 ${styles.smallText}`}>
-					<span>{salon?.rating?.value}</span>
-					<span className='mx-1'>
-						<RatingStar value={salon?.rating?.value}></RatingStar>
-					</span>
-					<span>({salon?.rating?.count})</span>
-				</div>
+				{ salon?.rating?.value &&
+					<div className={`text-muted my-1 ${styles.smallText}`}>
+						<span>{salon?.rating?.value}</span>
+						<span className='mx-1'>
+							<RatingStar value={salon?.rating?.value}></RatingStar>
+						</span>
+						<span>({salon?.rating?.count})</span>
+					</div>
+				}
 
 			</div>
 
@@ -33,9 +35,9 @@ export function SalonHeader({salon}) {
 				<span>
 					<GeoAltFill size={12} className="align-baseline"/>
 				</span>
-				<span className={`${styles.paddedText}`}>
-					{salon?.location}
-				</span>
+				<a className={`${styles.paddedText}`} href={salon?.address_link}>
+					{salon?.address}
+				</a>
 			</div>
 		</>
 	);

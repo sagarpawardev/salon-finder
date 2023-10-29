@@ -16,15 +16,18 @@ export function SaloonListItem(props) {
 					</Col>
 					<Col xs="8" md="9" className='align-middle'>
 						<h4 className={`${styles.salonListItemTitle} text-truncate`}>{props.salon?.name}</h4>
-						<Row className={styles.smallText}>
-							<Col xs='10' className={`text-muted`}>
-								<span>{props.salon?.rating?.value}</span>
-								<span className='mx-1'>
-									<RatingStar value={props.salon?.rating?.value}></RatingStar>
-								</span>
-								<span>({props.salon?.rating?.count})</span>
-							</Col>
-						</Row>
+
+						{ props.salon?.rating?.value && 
+							<Row className={styles.smallText}>
+								<Col xs='10' className={`text-muted`}>
+									<span>{props.salon?.rating?.value}</span>
+									<span className='mx-1'>
+										<RatingStar value={props.salon?.rating?.value}></RatingStar>
+									</span>
+									<span>({props.salon?.rating?.count})</span>
+								</Col>
+							</Row>
+						}
 						<Row className={`${styles.smallText} text-muted`}>
 							<Col>
 								<GeoAltFill size={12} className="align-baseline"/>

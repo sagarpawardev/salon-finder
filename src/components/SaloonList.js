@@ -13,6 +13,8 @@ export function SaloonList() {
 	const { auth } = useContext(AuthContext);
 	const navigate = useNavigate();
 
+	const NUM_IMAGES_IN_PUBLIC_SALON = 7;
+
 	const localityId = new URLSearchParams(useLocation().search).get("locality")
 
 	const handleLocationClick = (event) => {
@@ -25,9 +27,27 @@ export function SaloonList() {
 		navigate(`/salon/${selectedSalonId}`);
 	};
 
+	const randomNumberLessThan = (max) => Math.floor(Math.random() * max) + 1;
+
+	const mapSalonList = (data) => {
+		const salonList = data?.salon_list?.map( salon => {
+			const randomNumber = randomNumberLessThan(NUM_IMAGES_IN_PUBLIC_SALON);
+			return {
+				photo: `/salons/${randomNumber}.jpg`,
+				...salon
+			};
+		});
+
+		return {
+			...data,
+			salon_list: salonList
+		}
+	};
+
 	useEffect(() => {
 		client.get('/salonsForUser')
 			.then(response => response.data)
+			.then( data => mapSalonList(data) )
 			.then(data => {
 				setSalonList(data.salon_list)
 			})
@@ -45,7 +65,7 @@ export function SaloonList() {
 
 				<Row className="justify-content-md-center">
 					<Col md="auto">
-						{salonList.map((salon, index) => (
+						{salonList?.map((salon, index) => (
 							<div key={index} data-salon-id={salon?.salon_id} onClick={handleClickSalon} className={styles.clickable}>
 								<SaloonListItem salon={salon}/>
 
