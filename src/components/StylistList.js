@@ -53,7 +53,7 @@ export function StylistList({onSelection}) {
 						stylist={stylist} 
 						key={index} 
 						onSelect={handleSelected} 
-						selected={ selected?.id === stylist?.stylist_id }/>
+						selected={ selected?.stylist_id === stylist?.stylist_id }/>
 				))}
 			</Row>
 		</>

@@ -18,6 +18,9 @@ import StylistProfile from './components/StylistProfile';
 import VerifyBookingOtp from './components/VerifyBookingOtp';
 import SalonAdmin from './components/SalonAdmin';
 
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+
 export const AuthContext = createContext(null);
 
 const credentials = getLocalAuth();
@@ -38,16 +41,13 @@ function App() {
     }
   }, [auth]);
 
-  // useLayoutEffect(() => {
-  //   document.body.style.backgroundColor = "#F5F5F5"
-  // });
-
   return (
 
     <BrowserRouter>
       <div className="app c-container">
         <AuthContext.Provider value={{ auth: auth, setAuth: setAuth }}>
         {currentPath.includes('partner') ? <PartnerHeader /> : <Header/>}
+          <ToastContainer />
           <Routes>
             <Route path="/" element={
               <ProtectedRoute>

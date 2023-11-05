@@ -1,26 +1,18 @@
 import { React, useContext, useEffect, useState } from 'react'
 import styles from './styles/SaloonList.module.scss';
 import { Col, Container, Row } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import client from '../utils/Client';
 import { AuthContext } from '../App';
 import SaloonListItem from './SaloonListItem';
+import { toast } from 'react-toastify';
 
 export function SaloonList() {
 	const [salonList, setSalonList] = useState([]);
-	const [city, setCity] = useState(undefined);
 	const { auth } = useContext(AuthContext);
 	const navigate = useNavigate();
 
 	const NUM_IMAGES_IN_PUBLIC_SALON = 7;
-
-	const localityId = new URLSearchParams(useLocation().search).get("locality")
-
-	const handleLocationClick = (event) => {
-		event.preventDefault();
-		navigate('/profile');
-	};
 
 	const handleClickSalon = (event) => {
 		const selectedSalonId = event.currentTarget?.dataset?.salonId;
@@ -47,12 +39,10 @@ export function SaloonList() {
 	useEffect(() => {
 		client.get('/salonsForUser')
 			.then(response => response.data)
-			.then( data => mapSalonList(data) )
-			.then(data => {
-				setSalonList(data.salon_list)
-			})
-			.catch(errors => console.error(errors));
-	}, [auth?.user?.city?.name]);
+			.then(data => mapSalonList(data) )
+			.then(data => setSalonList(data.salon_list))
+			.catch(error => toast.error(error.message));
+	}, []);
 
 	return (
 		<>

@@ -21,11 +21,13 @@ export function TimeSlotList({salonId, services, stylist, onSelection}) {
 	}, [salonId, services, stylist]);
 
     const handleSlotClicked = (slot) => {
+        setSelectedAfterMin(undefined);
         setSelectedSlot(slot);
         onSelection(slot, 'slot');
     }
     
     const handleAfterMinClicked = (slot) => {
+        setSelectedSlot(undefined);
         setSelectedAfterMin(slot);
         onSelection(slot, 'afterMin');
     }
@@ -47,7 +49,7 @@ export function TimeSlotList({salonId, services, stylist, onSelection}) {
                                     <Col key={idx}>
                                         <TimeSlot 
                                             slot={slot}
-                                            selected={selectedAfterMin?.id === slot?.id}
+                                            selected={selectedAfterMin?.value === slot?.value}
                                             onClick={ handleAfterMinClicked }
                                         />
                                     </Col>
@@ -69,7 +71,7 @@ export function TimeSlotList({salonId, services, stylist, onSelection}) {
                                     <Col key={idx}>
                                         <TimeSlot 
                                             slot={slot}
-                                            selected={selectedSlot?.id === slot?.id}
+                                            selected={selectedSlot?.value === slot?.value}
                                             onClick={ handleSlotClicked }
                                         />
                                     </Col>

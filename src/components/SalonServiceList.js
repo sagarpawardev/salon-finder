@@ -18,14 +18,13 @@ export function SalonServiceList({onSelection}) {
 	}, [salonId]);
 
 	const handleSelectionChange = (selection) => {
-		const serviceId = selection?.service?.id;
+		const serviceId = selection?.service?.name;
 		let newSelection = {...selectedServices};
 		if(selection?.selected) {
 			newSelection[serviceId] = selection?.service.name;
 		}
 		else {
 			newSelection = newSelection.filter((item) => item.name !== selection?.service.name);
-			setSelectedServices(newSelection)
 		}
 
 		setSelectedServices(newSelection);

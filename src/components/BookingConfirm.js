@@ -47,6 +47,7 @@ export function BookingConfirm() {
                         name: response?.salon,
                     },
                     startTime: response?.start_time,
+                    endTime: response?.end_time,
                 }) 
             )
             .then(setBookingDetails);
@@ -74,9 +75,9 @@ export function BookingConfirm() {
                             <Row>
                                 <Col>
                                     <div className="c-text-small-title text-muted mt-2">Slot</div>
-                                    <Moment format="LLL" >{bookingDetails.start_time}</Moment>
+                                    <Moment format="LLL" >{bookingDetails.startTime}</Moment>
                                     -
-                                    <Moment format="LLL" >{bookingDetails.end_time}</Moment>
+                                    <Moment format="LLL" >{bookingDetails.endTime}</Moment>
                                 </Col>
                             </Row>
                             <Row>

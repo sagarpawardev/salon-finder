@@ -63,7 +63,7 @@ export function SalonDetails() {
 			stylist_id: selectedStylist.stylist_id,
 			date: date,
 			salon_id: salonId,
-			start_time: availableSlot.start_time,
+			start_time: availableSlot?.start_time,
 			context: {
 				services: selectedServices
 			}

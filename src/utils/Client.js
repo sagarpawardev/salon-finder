@@ -172,8 +172,8 @@ const getMocks = {
         ],
         "stylist": "Tyler Durden",
         "salon": "Test Salon",
-        "start_time": "28-10-2023 18:07:36",
-        "end_time": "28-10-2023 18:37:36"
+        "start_time": "2023-10-28T18:07:36Z",
+        "end_time": "2023-10-28T18:37:36Z"
       },
     "/bookings": [
         {
@@ -260,8 +260,8 @@ const getMocks = {
         ],
         "stylist": "Tyler Durder",
         "salon": "Toni & Guy",
-        "start_time": "28-10-2023 18:37:17",
-        "end_time": "28-10-2023 19:07:17"
+        "start_time": "2023-10-28T18:07:36Z",
+        "end_time": "2023-10-28T18:37:36Z"
       },
       "/slotsToDisplay": {
         "default_slots": [
@@ -511,8 +511,12 @@ const patchMocks = {
 }
 
 export const client = {
-    get: (url) => Promise.resolve({
-        data: getMocks[url] 
+    get: (url) => new Promise((resolve, reject) => {
+      if(url==='/salonsForUser'){
+        throw new Error('Sample Error from api');
+      }
+
+      resolve({data: getMocks[url] });
     }),
     post: (url) => Promise.resolve({
         data: postMocks[url] 
