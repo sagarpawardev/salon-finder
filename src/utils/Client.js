@@ -60,13 +60,15 @@ const getMocks = {
             "name": "HAIR_CUT",
             "display_name": "Hair Cut",
             "time": 30,
-            "price": 100
+            "price": 100,
+            "image_url": ""
           },
           {
             "name": "FACE_MASSAGE",
             "display_name": "Face Massage",
             "time": 30,
-            "price": 200
+            "price": 200,
+            "image_url": ""
           }
         ]
       },
@@ -306,7 +308,104 @@ const getMocks = {
             "value": 20
           }
         ]
-      }
+      },
+      "stylist": {
+        "stylist_id": "ST22CIB8IS",
+        "phone": null,
+        "name": null,
+        "gender": null,
+        "active": false
+      },
+      "/stylist/booking": {
+        "upcoming": [
+          {
+            "booking_id": "B3VGA42AHCNFE",
+            "status": "RESERVED",
+            "otp": "5631",
+            "stylist": "ST-1RE9NK30A75DVCNFE",
+            "salon": "SLESD1R1T5BOC19S",
+            "user": "Ankush",
+            "start_time": "28-10-2023 18:07:36",
+            "services": [
+              "HAIR_CUT"
+            ],
+            "amount": 10.0
+          },
+          {
+            "booking_id": "B3XRM42AHCNFE",
+            "status": "RESERVED",
+            "otp": "5946",
+            "stylist": "ST-1RE9NK30A75DVCNFE",
+            "salon": "SLESD1R1T5BOC19S",
+            "user": "Ankush",
+            "start_time": "28-10-2023 18:37:17",
+            "services": [
+              "HAIR_CUT"
+            ],
+            "amount": 10.0
+          }
+        ],
+        "completed": null
+      },
+      "/stylist/admin": {
+        "salon_list": [
+          {
+            "salon_id": "SLESD1R1T5BOC19S",
+            "name": "Test Salon",
+            "address_link": "address link 1",
+            "address": "string",
+            "phone": "7696441092",
+            "salon_type": "HE",
+            "start_time": 8,
+            "end_time": 10
+          }
+        ]
+      },
+      "/role": {
+        "id": 6,
+        "verseId": "ST-1RE9NK30A75DVCNFE",
+        "role": "SALON_OWNER"
+      },
+      "/salon/SLESD1R1T5BOC19S/booking": {"completed":0,"upcoming":0},
+      "/salon/SLESD1R1T5BOC19S/ownerView": {
+        "salon_id": null,
+        "name": "Test Salon",
+        "code": null,
+        "city_id": null,
+        "address": "string",
+        "address_link": null,
+        "phone": "7696441092",
+        "context": {
+          "services": [
+            {
+              "service": "HAIR_CUT",
+              "time": 30,
+              "price": 80.0
+            }
+          ],
+          "start_time": 8,
+          "end_time": 10
+        },
+        "owner_id": null,
+        "salon_type": null,
+        "stylist_responses": null
+      },
+      "/city": {"city_list":[{"id":1,"city":"Bangalore"}]},
+      "/salon/SLESD1R1T5BOC19S/services" : {
+        "services": [
+          {
+            "name": "HAIR_CUT",
+            "display_name": "Hair Cut",
+            "time": 30,
+            "price": 80.0,
+            "image_url": "image url"
+          }
+        ]
+      },
+      "/salon/SLESD1R1T5BOC19S/allServices": ["HAIR_CUT","TRIMMING","DE_TANNING"],
+      "/salon/SLESD1R1T5BOC19S/mappedLocality": {"locality_response_list":[{"id":1,"locality":"Green Glen Layout"}]},
+      "/salon/SLESD1R1T5BOC19S/stylist": {"stylist_list":[{"stylist_id":"ST-1RE9NK30A75DVCNFE","phone":null,"name":"Ankush","gender":"HE","active":true}]},
+      "/salon/SLESD1R1T5BOC19S/eligibleLocality": {"locality_response_list":[{"id":1,"locality":"Green Glen Layout"},{"id":2,"locality":"BELLANDUR"}]}
 };
 
 const postMocks = {
@@ -358,7 +457,9 @@ const postMocks = {
         "user_id": null,
         "created_at": 1698499738789,
         "phone": null
-      }
+      },
+      "/booking/verify": {} ,
+    "/mapSalonLocality": {}  
 };
 
 const deleteMocks = {
@@ -372,7 +473,41 @@ const patchMocks = {
         "phone": "7696441091",
         "email": "tylerdurden@gmail.com"
     },
-    "/updatePreference": {}
+    "/updatePreference": {},
+    "/stylist": {},
+    "/stylist/status": {},
+    "/salon/SLESD1R1T5BOC19S": {},
+    "/salon/SLESD1R1T5BOC19S/addService": {
+      "services": [
+        {
+          "name": "HAIR_CUT",
+          "display_name": "Hair Cut",
+          "time": 30,
+          "price": 80.0,
+          "image_url": "image url"
+        },
+        {
+          "name": "TRIMMING",
+          "display_name": "Trimming",
+          "time": 25,
+          "price": 50.0,
+          "image_url": "image url"
+        }
+      ]
+    },
+    "/salon/SLESD1R1T5BOC19S/removeService": {
+      "services": [
+        {
+          "name": "HAIR_CUT",
+          "display_name": "Hair Cut",
+          "time": 30,
+          "price": 80.0,
+          "image_url": "image url"
+        }
+      ]
+    },
+    "/stylist/salon": {},
+    "/stylist/ST22NDADVV/status": {}
 }
 
 export const client = {

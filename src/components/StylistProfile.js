@@ -25,8 +25,8 @@ export function StylistProfile() {
 		
 	}, []);
 
-	const handleSuccess = (data) => {
-		setAuth({...auth, user: {...data}});
+	const handleSuccess = () => {
+		setAuth({...auth, user: auth.user});
 		navigate("/partner");
 	};
 
@@ -43,13 +43,7 @@ export function StylistProfile() {
 			'gender': selectedGender,
 			'stylist_for': selectedStylistFor
 		}).then( response => {
-			if(response?.data){
-				handleSuccess(response.data);
-			}
-			else{
-				console.error('failed to update preferences');
-				console.error(response.data);
-			}
+				handleSuccess();
 		})
 		.catch(errors => console.error(errors))
 		.finally( () => {

@@ -12,3 +12,6 @@ export * from './SalonForm';
 export * from './AdminView';
 export * from './UserPreference';
 export * from './StylistProfile';
+export * from './StylistView';
+export * from './OwnerSalonList';
+export * from './SalonStylist';

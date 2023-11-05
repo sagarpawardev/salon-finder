@@ -12,8 +12,11 @@ import { SalonDetails } from './components/SalonDetails';
 import SalonStylist from './components/StylistList';
 import ProtectedRoute from './utils/ProtectedRoute';
 import { PartnerHeader } from './components/PartnerHeader';
-import AdminView from './components/AdminView';
+import { OwnerSalonList } from './components/OwnerSalonList';
+import StylistView from './components/StylistView';
 import StylistProfile from './components/StylistProfile';
+import VerifyBookingOtp from './components/VerifyBookingOtp';
+import SalonAdmin from './components/SalonAdmin';
 
 export const AuthContext = createContext(null);
 
@@ -44,7 +47,7 @@ function App() {
     <BrowserRouter>
       <div className="app c-container">
         <AuthContext.Provider value={{ auth: auth, setAuth: setAuth }}>
-        {currentPath === '/partner/' ? <PartnerHeader /> : <Header/>}
+        {currentPath.includes('partner') ? <PartnerHeader /> : <Header/>}
           <Routes>
             <Route path="/" element={
               <ProtectedRoute>
@@ -113,15 +116,16 @@ function App() {
 
             {/* Partner Pages */}
             <Route path="/partner" element={
-              // <ProtectedRoute>
-                <AdminView />
-              // </ProtectedRoute>
+                // <StylistView></StylistView>
+                <OwnerSalonList />
             } />
 
             <Route path="/partner/signin" element={<SigninForm />} />
-            <Route path="/partner/signin?ref=:id" element={<SigninForm />} />
+            <Route path="/partner" element={<StylistView />} />
             <Route path="/partner/profile" element={<StylistProfile />} />
-
+            <Route path="/partner/booking/:bookingId/verify" element={<VerifyBookingOtp />} />
+            <Route path="/partner/salon" element={<OwnerSalonList />} />
+            <Route path="/partner/salon/:salonId" element={<SalonAdmin />} />
           </Routes>
         </AuthContext.Provider>
       </div>

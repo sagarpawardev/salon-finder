@@ -1,31 +1,41 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from "react-router-dom";
+import client from '../utils/Client';
 
 function SalonForm() {
+  const [salonOwnerResponse, setSalonOwnerResponse] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     cityId: '',
     address: '',
     addressLink: '',
     phone: '',
+    startTime: '',
+    endTime: ''
   });
+
+  const { salonId } = useParams();
 
   const [cities, setCities] = useState([]);
 
   useEffect(() => {
-    // Fetch the list of cities from an API
-    const fetchCities = async () => {
-      try {
-        const response = await fetch('https://your-city-api.com');
-        if (response.ok) {
-          const data = await response.json();
-          setCities(data);
-        }
-      } catch (error) {
-        console.error('Error fetching cities:', error);
-      }
-    };
+    client.get(`/salon/${salonId}/ownerView`)
+                    .then(response => response.data)
+                    .then(data => { 
+                      setSalonOwnerResponse(data)
+                      formData.name = data?.name
+                      formData.cityId = data?.city_id
+                      formData.address = data?.address
+                      formData.addressLink = data?.address_link
+                      formData.phone = data?.phone
+                      formData.startTime = data?.context?.start_time
+                      formData.endTime = data?.context?.end_time
+                    });
 
-    fetchCities();
+    client.get("/city")
+        .then(response => response.data)
+        .then(data => setCities(data.city_list))
+        
   }, []);
 
   const handleChange = (e) => {
@@ -36,31 +46,21 @@ function SalonForm() {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    try {
-      // Replace the API_URL with your actual API endpoint
-      const API_URL = 'https://your-api-endpoint.com';
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        // Handle success, e.g., show a success message
-        console.log('Form submitted successfully');
-      } else {
-        // Handle API error, e.g., show an error message
-        console.error('Error submitting the form');
+    client.patch(`/salon/${salonId}`, {
+      name: formData.name,
+      city_id: formData.cityId,
+      address: formData.address,
+      address_link: formData.addressLink,
+      phone: formData.phone,
+      context: {
+        start_time: formData.startTime,
+        end_time: formData.endTime
       }
-    } catch (error) {
-      // Handle network error
-      console.error('Network error:', error);
-    }
+		})
+		.then(request => request.data)
+		.catch(errors => console.error(errors));
   };
 
   return (
@@ -82,10 +82,10 @@ function SalonForm() {
           value={formData.cityId}
           onChange={handleChange}
         >
-          <option value="">Select a city</option>
+          {/* <option value="">Select a city</option> */}
           {cities.map((city) => (
             <option key={city.id} value={city.id}>
-              {city.name}
+              {city.city}
             </option>
           ))}
         </select>
@@ -117,6 +117,26 @@ function SalonForm() {
           type="text"
           name="phone"
           value={formData.phone}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div>
+        <label>Start Time:</label>
+        <input
+          type="text"
+          name="startTime"
+          value={formData.startTime}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div>
+        <label>End Time:</label>
+        <input
+          type="text"
+          name="endTime"
+          value={formData.endTime}
           onChange={handleChange}
         />
       </div>

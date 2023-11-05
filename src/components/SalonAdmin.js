@@ -1,75 +1,75 @@
-import React from 'react';
-import useCollapse from 'react-collapsed';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import { useCollapse } from 'react-collapsed';
 import SalonForm from './SalonForm';
+import { client } from '../utils';
+import { useParams } from 'react-router-dom';
+import SalonServiceUpdate from './SalonServiceUpdate';
+import MapLocality from './MapLocality';
+import SalonStylist from './SalonStylist';
 
-function SalonAdmin() {
+export function SalonAdmin() {
     const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
-return (
-    <div>
-        <div className="collapsible">
-            <div className="header">
-                'Edit Salon Details'
-            </div>
-            <div {...getCollapseProps()}>
-                <div className="content">
-                    <SalonForm/>
-                </div>
-            </div>  
-        </div>
+    const [ role, setRole ] = useState(null)
+    const [ salonBooking, setSalonBooking ] = useState(null)
+    const { salonId } = useParams();
 
-        <div className="collapsible">
-            <div className="header">
-                'Add/Remove Service'
-            </div>
-            <div {...getCollapseProps()}>
-                <div className="content">
-                    <SalonForm/>
-                </div>
-            </div>
-        </div>
+    useEffect(() => {
+        client.get("/role")
+            .then(response => response.data)
+            .then(data => {
+                setRole(data.role)
+            });
 
-        <div className="collapsible">
-            <div className="header">
-                'Add/Remove Locality'
-            </div>
-            <div {...getCollapseProps()}>
-                <div className="content">
-                    <SalonForm/>
-                </div>
-            </div>
-        </div>
+            client.get(`/salon/${salonId}/booking`)
+            .then(response => response.data)
+            .then(data => {
+                setSalonBooking(data)
+            });
 
-        <div className="collapsible">
-            <div className="header">
-                'Add/Remove Stylist'
-            </div>
-            <div {...getCollapseProps()}>
-                <div className="content">
-                    <SalonForm/>
-                </div>
-            </div>
-        </div>
+    }, []);
 
-        <div className="collapsible">
-            <div className="header">
-                'Get Booking'
-            </div>
-            <div {...getCollapseProps()}>
-                <div className="content">
-                    <SalonForm/>
+
+    if (role != 'SALON_OWNER'){
+        return <div>You are not owner of the salon</div>
+    }
+    else
+        return (
+            
+            <div>
+                <div>
+                    <h3>SalonId : {salonId}</h3>
+                </div>
+
+                <SalonFormCollapsible></SalonFormCollapsible>
+                
+                <ServiceCollapsible></ServiceCollapsible>
+
+                <LocalityCollapsible></LocalityCollapsible>
+
+                <StylistCollapsible></StylistCollapsible>
+
+                <div className="collapsible">
+                    <div className="header" {...getToggleProps()}>
+                        Get Bookings
+                    </div>
+                    <div {...getCollapseProps()}>
+                        <div className="content">
+                            <h5>Completed : {salonBooking?.completed}</h5>
+                            <h5>upcoming : {salonBooking?.upcoming}</h5>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    );
+            );
 }
+
+
 
 function SalonFormCollapsible() {
     const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
     return (
         <div className="collapsible">
-            <div className="header">
+            <div className="header" {...getToggleProps()}>
                 Edit Salon Details
             </div>
             <div {...getCollapseProps()}>
@@ -85,12 +85,12 @@ function ServiceCollapsible() {
     const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
     return (
         <div className="collapsible">
-            <div className="header">
+            <div className="header" {...getToggleProps()}>
                 Add/Remove Service
             </div>
             <div {...getCollapseProps()}>
                 <div className="content">
-                    <SalonForm/>
+                    <SalonServiceUpdate />
                 </div>
             </div>
         </div>
@@ -101,12 +101,12 @@ function LocalityCollapsible() {
     const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
     return (
         <div className="collapsible">
-            <div className="header">
-                'Add/Remove Locality'
+            <div className="header" {...getToggleProps()}>
+                Add/Remove Locality
             </div>
             <div {...getCollapseProps()}>
                 <div className="content">
-                    <SalonForm/>
+                    <MapLocality />
                 </div>
             </div>
         </div>
@@ -117,12 +117,12 @@ function StylistCollapsible() {
     const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
     return (
         <div className="collapsible">
-            <div className="header">
+            <div className="header" {...getToggleProps()}>
                 Add/Remove Stylist
             </div>
             <div {...getCollapseProps()}>
                 <div className="content">
-                    <SalonForm/>
+                    <SalonStylist/>
                 </div>
             </div>
         </div>
@@ -133,7 +133,7 @@ function BookingCollapsible() {
     const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
     return (
         <div className="collapsible">
-            <div className="header">
+            <div className="header" {...getToggleProps()}>
                 Get Booking
             </div>
             <div {...getCollapseProps()}>

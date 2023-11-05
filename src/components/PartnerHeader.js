@@ -8,7 +8,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 function unauthNavLinks() {
   return (
     <>
-      <Nav.Link className={`align-bottom ${styles.login}`} href="/signin">Login</Nav.Link>
+      <Nav.Link className={`align-bottom ${styles.login}`} href="/partner/signin">Login</Nav.Link>
     </>
   );
 }
@@ -26,6 +26,7 @@ function authNavLinks() {
         <Offcanvas.Body>
           <Nav className="justify-content-end flex-grow-1 pe-3">
             <Nav.Link href="/partner/stylist">Stylist</Nav.Link>
+            <Nav.Link href="/partner/profile">Profile</Nav.Link>
             <Nav.Link href="/partner/salon">Salon</Nav.Link>
             <Nav.Link href="/partner/admin">Admin</Nav.Link>
           </Nav>

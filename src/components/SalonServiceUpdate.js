@@ -1,67 +1,133 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import client from '../utils/Client';
+import { useParams } from "react-router-dom";
 
-const YourComponent = () => {
+export function SalonServiceUpdate() {
   // Sample data (replace with your own)
-  const initialData = [
-    { service: 'Service 1', time: '9:00 AM' },
-    { service: 'Service 2', time: '10:30 AM' },
-    // Add more items
-  ];
+  const [services, setServices] = useState([])
+  const [salonServices, setSalonServices] = useState([])
+  const [serviceToRemove, setServiceToRemove] = useState('')
+  const [time, setTime] = useState(null);
+  const [price, setPrice] = useState(null);
 
-  const [data, setData] = useState(initialData);
-  const [selectedService, setSelectedService] = useState('All'); // Initial value for the first dropdown
-  const [selectedTime, setSelectedTime] = useState('All'); // Initial value for the second dropdown
+  const [selectedService, setSelectedService] = useState(''); // Initial value for the first dropdown
 
-  // Function to handle filtering based on dropdown selections
-  const filterData = () => {
-    const filteredData = initialData.filter(item => {
-      if (selectedService !== 'All' && item.service !== selectedService) {
-        return false;
-      }
-      if (selectedTime !== 'All' && item.time !== selectedTime) {
-        return false;
-      }
-      return true;
-    });
-    setData(filteredData);
-  };
+  const {salonId} = useParams()
 
-  // Function to reset the filter and show all items
-  const resetFilter = () => {
-    setData(initialData);
-    setSelectedService('All');
-    setSelectedTime('All');
-  };
+  useEffect(() => {
+    client.get(`/salon/${salonId}/services`)
+			.then(response => response.data)
+			.then(data => {
+				setSalonServices(data.services)
+			})
+			.catch(errors => console.error(errors));
+
+    client.get(`/salon/${salonId}/allServices`)
+			.then(response => response.data)
+			.then(data => {
+				setServices(data)
+			})
+			.catch(errors => console.error(errors));
+
+    
+	}, [salonId]);
+
+  const handleAddService = () => {
+    client.patch(`/salon/${salonId}/addService`, {
+      name: selectedService,
+      time: time,
+      price: price
+    })
+			.then(response => response.data)
+			.then(data => {
+				setSalonServices(data.services)
+        // getSalonServices()
+			})
+			.catch(errors => console.error(errors));
+
+  }
+
+  const handleDeleteService = () => {
+    client.patch(`/salon/${salonId}/removeService`, {
+      name: serviceToRemove
+    })
+			.then(response => response.data)
+			.then(data => {
+				setSalonServices(data.services)
+			})
+			.catch(errors => console.error(errors));
+
+  }
 
   return (
     <div>
+      <h5>Current Services</h5>
+      <ul>
+        {salonServices.map((salonService, index) => (
+          <li key={index}>
+            Service: {salonService.name}, Time: {salonService.time}, Price: {salonService.price}
+          </li>
+        ))}
+      </ul>
+
       <div>
+      <h5>Update Service</h5>
+      <label>Select Service to update
         <select
           value={selectedService}
           onChange={(e) => setSelectedService(e.target.value)}
         >
-          <option value="All">All Services</option>
-          {/* Add service options dynamically here */}
+          {
+            services.map((service) => (
+              <option value={service}>{service}</option>
+            ))
+          }
         </select>
-        <select
-          value={selectedTime}
-          onChange={(e) => setSelectedTime(e.target.value)}
-        >
-          <option value="All">All Times</option>
-          {/* Add time options dynamically here */}
-        </select>
-        <button onClick={filterData}>Filter</button>
-        <button onClick={resetFilter}>Reset</button>
-      </div>
-      <ul>
-        {data.map((item, index) => (
-          <li key={index}>
-            Service: {item.service}, Time: {item.time}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
+        </label>
+        <div>
+          <label htmlFor="time">Time:</label>
+          <input
+            type="text"
+            id="time"
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+          />
+        </div>
 
-export default YourComponent;
+        <div>
+          <label htmlFor="price">Price:</label>
+          <input
+            type="text"
+            id="price"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+          />
+        </div>
+
+        <button onClick={handleAddService}>Update Service</button>
+      </div>
+
+      <div>
+      <h5>Delete Service</h5>
+      <label>Select Service to remove
+        <select
+          value={serviceToRemove}
+          onChange={(e) => setServiceToRemove(e.target.value)}
+        >
+          {
+            salonServices.map((salonService) => (
+              <option value={salonService.name}>{salonService.name}</option>
+            ))
+          }
+        </select>
+          </label>
+        <button onClick={handleDeleteService}>Delete Service</button>
+      </div>
+
+    </div>
+
+    
+  );
+}
+
+export default SalonServiceUpdate;

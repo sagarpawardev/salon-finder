@@ -1,5 +1,5 @@
 import { useContext, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -7,21 +7,21 @@ import Button from 'react-bootstrap/Button';
 import { createSearchParams, useNavigate } from 'react-router-dom';
 
 import styles from './styles/VerifyOtp.module.scss';
-import { AuthContext } from '../App';
 import client from '../utils/Client';
+import { AuthContext } from '../App';
 import { Card, Container } from 'react-bootstrap';
 
-export function VerifyOtp({email, sendOtpResponse}) {
+export function VerifyBookingOtp() {
 	const number1 = useRef(null);
 	const number2 = useRef(null);
 	const number3 = useRef(null);
 	const number4 = useRef(null);
+
 	const navigate = useNavigate();
 
-	const { setAuth } = useContext(AuthContext);
+	const { auth, setAuth } = useContext(AuthContext);
 
-	const location = useLocation();
-	const pathname = location.pathname;
+	const { bookingId } = useParams();
 
 	const otpMap = {
 		'form.number1': {
@@ -44,74 +44,16 @@ export function VerifyOtp({email, sendOtpResponse}) {
 		},
 	};
 
-	const handleSuccess = (authData) => {
-		// setAuth( authData );
-
-		if (pathname.includes('partner')) {
-			client.get('/stylist')
-			.then(response => response.data)
-			.then(stylist => {
-				setAuth( {...authData, user: {...stylist}});
-				if(stylist?.name == null) {
-					navigate(`/partner/profile`)
-				} else {
-					navigate(`/partner`)
-				}
-			});
-		}
-		else {
-			
-		
-		client.get('/user/detailsPreferences', )
-			.then(response => response.data)
-			.then(userData => {
-				setAuth( {...authData, user: {...userData}});
-				if(userData?.user?.name == null || userData?.user?.phone == null) {
-					navigate('/profile', { state: { email: email } });
-				} else if (userData?.city == null || userData?.locality == null) {
-					navigate('/preference');
-				}
-				else{
-					navigate({
-						pathname: "/search",
-						search: createSearchParams({
-							locality: userData?.locality
-						}).toString()
-					});
-				}
-			})
-			.catch(errors => console.error(errors));
-
-		}
-	};
-
 	const handleSubmit = () => {
 		const enteredOtp = number1.current.value + number2.current.value + number3.current.value + number4.current.value;
-		const pathname = location.pathname;
-		let otpUsecase = ''
-		if (pathname.includes('partner'))
-			otpUsecase = 'STYLIST_LOGIN';
-		else
-			otpUsecase = 'USER_LOGIN';
 
-
-		client.post("/login", {
+		client.post("/booking/verify", {
 			"otp": enteredOtp,
-			email: email,
-			created_at: sendOtpResponse.created_at,
-			use_case: otpUsecase
+			booking_id: bookingId
 		})
-		.then(request => request.data)
-		.then(data => {
-			console.log(data.token)
-			if(data?.token){
-				client.defaults.headers.common['Authorization'] = 'Bearer ' + data.token
-				handleSuccess(data);
-			}
-			else{
-				console.error('failed to login');
-				console.error(data);
-			}
+		.then(response => {
+			setAuth({...auth, user: auth.user});
+			navigate(`/partner`)
 		})
 		.catch(errors => console.error(errors));
 	};
@@ -188,4 +130,4 @@ export function VerifyOtp({email, sendOtpResponse}) {
 	);
 }
 
-export default VerifyOtp;
+export default VerifyBookingOtp;

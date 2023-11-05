@@ -1,20 +1,46 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useCollapse } from 'react-collapsed';
+import { StylistAvailability } from './StylistAvailability';
+import { StylistBookingList } from './StylistBookingList';
+import client from '../utils/Client';
 
-function StylistView() {
+export function  StylistView() {
     const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
-return (
-    <div>   
-        
-        <AvailabilityCollapsible/>     
+    const [ stylistId, setStylistId ] = useState(null)
+    // const { stylistId } = useParams();
 
-        <StylistBookingCollapsible/>
-        
-    </div>
+    useEffect(() => {
+        // Fetch the initial status from the API
+        // client.get(`stylist/${stylistId}`)
+        client.get('/stylist')
+          .then((response) => {
+            setStylistId(response?.data?.stylist_id);
+          })
+          .catch((error) => {
+            console.error('Error fetching data: ', error);
+          });
+      }, []);
+
+    return (
+        <div>   
+
+            <div>
+                <h3>StylistId : {stylistId}</h3>
+            </div>
+            
+            {/* <AvailabilityCollapsible stylistId={stylistId}/>     
+
+            <StylistBookingCollapsible stylistId={stylistId}/> */}
+
+            <AvailabilityCollapsible/>     
+
+            <StylistBookingCollapsible/>
+            
+        </div>
     );
 }
 
-function AvailabilityCollapsible() {
+function AvailabilityCollapsible({stylistId}) {
     const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
     return (
         <div className="collapsible">
@@ -22,24 +48,27 @@ function AvailabilityCollapsible() {
                 Availability
             </div>
             <div {...getCollapseProps()}>
-                <div className="content">
+                <StylistAvailability></StylistAvailability>
+                {/* <StylistAvailability stylistId={stylistId}></StylistAvailability> */}
+                {/* <div className="content">
                     StylistAvailability
-                </div>
+                </div> */}
             </div>  
         </div>
     );
 }
 
-function StylistBookingCollapsible() {
+function StylistBookingCollapsible({stylistId}) {
     const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
     return (
         <div className="collapsible">
             <div className="header" {...getToggleProps()}>
-                Availability
+                Booking List
             </div>
             <div {...getCollapseProps()}>
                 <div className="content">
-                    StylistBookingList
+                    <StylistBookingList></StylistBookingList>
+                    {/* <StylistBookingList stylistId={stylistId}></StylistBookingList> */}
                 </div>
             </div>  
         </div>

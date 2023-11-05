@@ -1,34 +1,46 @@
 // ToggleButton.js
 
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { client } from '../utils';
 
-const StylistAvailability = ({ id }) => {
-  const [status, setStatus] = useState(false);
+// export function StylistAvailability({ stylistId }) {
+export function StylistAvailability() {
+  const [status, setStatus] = useState(null);
 
   useEffect(() => {
     // Fetch the initial status from the API
-    axios.get(`API_ENDPOINT/${id}`)
+    // client.get(`stylist/${stylistId}`)
+    client.get('/stylist')
       .then((response) => {
-        setStatus(response.data.status);
+        setStatus(response?.data?.active);
       })
       .catch((error) => {
         console.error('Error fetching data: ', error);
       });
-  }, [id]);
+  }, []);
 
   const toggleStatus = () => {
     // Toggle the status (active/inactive) locally
-    setStatus(!status);
+    
+    // client.patch(`/stylist/${stylistId}/status`, {
+    client.patch('/stylist/status', {
+      available: !status 
+    })
+      .then((response) => {
+        setStatus(!status);
+        // console.log(status)
+        // setStatus(response?.data?.status);
+      })
+      .catch((error) => {
+        console.error('Error fetching data: ', error);
+      });
 
-    // Send an API request to update the status
-    // You can implement this part as well
   };
 
   return (
     <div>
-      <span>Status: {status ? 'Active' : 'Inactive'}</span>
-      <button onClick={toggleStatus}>Toggle Status</button>
+      <span>Status: {status ? 'Available' : 'Unavailable'}</span>
+      <button onClick={toggleStatus}>{status ? 'Mark Unavailable' : 'Mark Available'}</button>
     </div>
   );
 };
