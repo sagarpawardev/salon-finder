@@ -29,27 +29,21 @@
     transform: translateX(-50%);
 }
 
-.top {
-    width: 50%; 
-    height: 100%; 
-    background: #3669C9; 
+.bottom {
     border-radius: 10px;
     padding: 15px 50px 15px 50px;
     justify-content: center; 
     align-items: center; 
     gap: 10px; 
-    display: inline-flex
-}
+    display: inline-flex;
 
-.bottom {
-    width: 50px; 
     text-align: center; 
+    background: #3669C9; 
     color: white; 
     font-size: 14px; 
     font-family: DM Sans; 
     font-weight: 500; 
     line-height: 20px; 
-    word-wrap: break-word
 }
 
 .footer {
