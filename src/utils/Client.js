@@ -512,9 +512,9 @@ const patchMocks = {
 
 export const client = {
     get: (url) => new Promise((resolve, reject) => {
-      if(url==='/salonsForUser'){
-        throw new Error('Sample Error from api');
-      }
+      // if(url==='/salonsForUser'){
+      //   throw new Error('Sample Error from api');
+      // }
 
       resolve({data: getMocks[url] });
     }),

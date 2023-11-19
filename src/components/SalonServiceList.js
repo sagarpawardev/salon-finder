@@ -7,7 +7,7 @@ import SalonServiceListItem from './SalonServiceListItem';
 
 export function SalonServiceList({onSelection}) {
 	const [serviceList, setServiceList] = useState([]);
-	const [selectedServices, setSelectedServices] = useState({});
+	const [selectedServices, setSelectedServices] = useState([]);
 	const { salonId } = useParams();
 
 	useEffect(() => {
@@ -19,9 +19,9 @@ export function SalonServiceList({onSelection}) {
 
 	const handleSelectionChange = (selection) => {
 		const serviceId = selection?.service?.name;
-		let newSelection = {...selectedServices};
+		let newSelection = [...selectedServices];
 		if(selection?.selected) {
-			newSelection[serviceId] = selection?.service.name;
+			newSelection.push(selection?.service.name)
 		}
 		else {
 			newSelection = newSelection.filter((item) => item.name !== selection?.service.name);
@@ -42,7 +42,7 @@ export function SalonServiceList({onSelection}) {
 						service={service} 
 						key={index} 
 						onSelectionChange={handleSelectionChange}
-						selected={selectedServices[service?.name]}/>
+						selected={ selectedServices.includes(service.name) }/>
 				))}
 			</Row>
 		</>

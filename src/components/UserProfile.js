@@ -33,9 +33,9 @@ export function UserProfile() {
 
 		const form = event.currentTarget;
 		if (form.checkValidity() === false) {
-			event.preventDefault();
 			event.stopPropagation();
-		}
+		} else
+			event.preventDefault();
 
 		setValidated(true);
 

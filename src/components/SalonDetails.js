@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import styles from './styles/SalonDetails.module.scss';
 import { Container, Row } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
+import './styles/App.css';
 import moment from "moment";
 
 import { useNavigate, useParams } from 'react-router-dom';
@@ -13,14 +13,24 @@ import TimeSlotList from './TimeSlotList';
 
 export function SalonDetails() {
 	const [salon, setSalon] = useState({});
-	const [selectedServices, setSelectedServices] = useState(new Set());
+	const [selectedServices, setSelectedServices] = useState([]);
 	const [selectedStylist, setSelectedStylist] = useState(undefined);
 	const [selectedSlot, setSelectedSlot] = useState(undefined);
 	const [selectedAfterMin, setSelectedAfterMin] = useState(undefined);
 	const [availableSlot, setAvailableSlot] = useState(undefined);
+	const [isDialogOpen, setDialogOpen] = useState(false);
+
 
 	const { salonId } = useParams();
 	const navigate = useNavigate();
+
+	const openDialog = () => {
+		setDialogOpen(true);
+	  };
+	
+	const closeDialog = () => {
+		setDialogOpen(false);
+	};
 
 	const RESERVED = 'RESERVED';
 
@@ -50,8 +60,10 @@ export function SalonDetails() {
 			start_time: selectedSlot?.value
 		})
 			.then(response => response.data)
-			.then(data => 
-				setAvailableSlot(data.available_slots[0])
+			.then(data => {
+					setAvailableSlot(data.available_slots[0])
+					openDialog()
+				}
 			)
 			.then(handleBookingStatus)
 			.catch(errors => console.error(errors));
@@ -123,13 +135,15 @@ export function SalonDetails() {
 
 			</Container>
 
+			<SlotDialogBox isOpen={isDialogOpen} onClose={closeDialog} availableSlot={availableSlot} handleSubmit={handleSubmit} />
+
 			
 
 			{ isFooterVisible() && (
 				<div>
 				<FindSlot onSubmit={findSlot}></FindSlot>
 
-				<FixedFooter onSubmit={handleSubmit}></FixedFooter>
+				{/* <FixedFooter onSubmit={handleSubmit}></FixedFooter> */}
 				</div>
 			)}
 		</>
@@ -141,7 +155,7 @@ function FixedFooter({onSubmit}) {
 	return (
 		<>
 			<Container 
-				className={`px-4 py-3 text-end ${styles.parentContainer} ${styles.fixedBottom} ${styles.footer}`}
+				// className={`px-4 py-3 text-end ${styles.parentContainer} ${styles.fixedBottom} ${styles.footer}`}
 			>
 				<div className={styles.top} onClick={onSubmit}>
 					<div className={styles.bottom}>Book</div>
@@ -153,12 +167,36 @@ function FixedFooter({onSubmit}) {
 
 function FindSlot({onSubmit}) {
 	return (
-		<div className="d-grid gap-2">
-				<Button className='mt-5' variant="primary" type="button" onClick={onSubmit}>
-					Find Available Time
-				</Button>
-			</div>
+		<>
+			<Container 
+				className={`px-4 py-3 text-end ${styles.parentContainer} ${styles.fixedBottom} ${styles.footer}`}
+			>
+				<div className={styles.top} onClick={onSubmit}>
+					<div className={styles.bottom}>Find Available Time</div>
+				</div>
+			</Container>
+		</>
 	);
+	// return (
+	// 	<div className="d-grid gap-2">
+	// 			<Button className='mt-5' variant="primary" type="button" onClick={onSubmit}>
+	// 				Find Available Time
+	// 			</Button>
+	// 		</div>
+	// );
 }
+
+function SlotDialogBox ({ isOpen, onClose, availableSlot, handleSubmit }) {
+	if (!isOpen) return null;
+  
+	return (
+	  <div className="dialog">
+		<div className="dialog-content">
+		  <p>Next available slot based on your selection is from {availableSlot?.display_start_time} to {availableSlot?.display_end_time}</p>
+		  <FixedFooter onSubmit={handleSubmit}></FixedFooter>
+		</div>
+	  </div>
+	);
+  };
 
 export default SalonDetails;
